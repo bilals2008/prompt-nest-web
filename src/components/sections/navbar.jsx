@@ -6,7 +6,7 @@ import { ModeToggle } from "@/components/mode-toggle";
 
 const LINKS = [
   { label: "Features", href: "#features" },
-  { label: "Screenshots", href: "#screenshots" },
+  { label: "Showcase", href: "#showcase" },
   { label: "Download", href: "#download" },
   { label: "Changelog", href: "#changelog" },
 ];
