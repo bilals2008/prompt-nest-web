@@ -176,7 +176,7 @@ export function Download({ release }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.4 }}
-          className="mx-auto max-w-xl text-center"
+          className="mx-auto max-w-2xl text-center"
         >
           <p className="text-xs font-medium uppercase tracking-wider text-primary">
             Download
