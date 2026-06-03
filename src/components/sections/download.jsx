@@ -384,6 +384,11 @@ const PlatformCard = ({
             Secure · Fast · Auto-updates
           </p>
         )}
+        {comingSoon && (
+          <p className="mt-3 text-xs text-muted-foreground">
+            Be the first to know
+          </p>
+        )}
       </div>
     </div>
   );
