@@ -117,7 +117,7 @@ export function Hero({ version: _version }) {
             animate="show"
             variants={fadeUp}
             custom={2}
-            className="mt-5 max-w-2xl text-balance text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg"
+            className="mt-5 max-w-2xl text-balance text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg font-[var(--font-body)]"
           >
             A calm, native desktop app to organize, search, and reuse your
             prompts. Built for Windows, macOS, and Linux.

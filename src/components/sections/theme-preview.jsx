@@ -104,7 +104,7 @@ export function ThemePreview() {
           <h2 className="mt-4 text-balance text-3xl font-serif italic tracking-tight sm:text-4xl lg:text-5xl">
             Make the whole app feel like yours.
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-balance text-base text-muted-foreground sm:text-lg">
+          <p className="mx-auto mt-4 max-w-xl text-balance text-base text-muted-foreground sm:text-lg font-[var(--font-body)]">
             Pick a palette once and the interface responds instantly.
           </p>
         </motion.div>

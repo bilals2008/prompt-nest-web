@@ -197,7 +197,7 @@ export function Download({ release }) {
           <h2 className="text-balance text-3xl font-serif italic tracking-tight text-foreground sm:text-4xl">
             Get Prompt Nest on your machine.
           </h2>
-          <p className="mt-4 text-pretty text-base text-muted-foreground">
+          <p className="mt-4 text-pretty text-base text-muted-foreground font-[var(--font-body)]">
             Auto-updates keep you on the latest version without re-installing.
           </p>
         </motion.div>

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300..700&family=Plus+Jakarta+Sans:wght@300..800&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -39,6 +39,7 @@
   --color-macos-green: var(--macos-green);
   --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
 }
 

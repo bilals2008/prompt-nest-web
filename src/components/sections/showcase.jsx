@@ -126,7 +126,7 @@ export function Showcase() {
           <h2 className="mt-3 text-balance text-3xl font-serif italic tracking-tight sm:text-4xl">
             A closer look at the details.
           </h2>
-          <p className="mt-4 text-pretty text-base text-muted-foreground">
+          <p className="mt-4 text-pretty text-base text-muted-foreground font-[var(--font-body)]">
             Every screen, every shortcut — designed to disappear once you start using it.
           </p>
         </div>
