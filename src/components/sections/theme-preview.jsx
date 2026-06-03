@@ -1,23 +1,60 @@
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion } from "motion/react";
 import { IconPalette, IconCheck } from "@tabler/icons-react";
 import { useTheme } from "@/components/theme-provider";
 import { THEMES } from "@/data/themes";
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 8 },
-  show: (i = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1], delay: i * 0.04 },
-  }),
-};
+gsap.registerPlugin(ScrollTrigger);
 
 export function ThemePreview() {
   const { themeId, setThemeId } = useTheme();
+  const sectionRef = useRef(null);
+  const swatchesRef = useRef([]);
+
+  useGSAP(() => {
+    gsap.fromTo(
+      swatchesRef.current.filter(Boolean),
+      { opacity: 0, scale: 0.8, y: 12 },
+      {
+        opacity: 1,
+        scale: 1,
+        y: 0,
+        duration: 0.4,
+        stagger: 0.03,
+        ease: "back.out(1.7)",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
+  }, { scope: sectionRef });
+
+  const handleThemeChange = (id) => {
+    const oldSwatch = swatchesRef.current[THEMES.findIndex((t) => t.id === themeId)];
+    gsap.to(oldSwatch, { scale: 1, duration: 0.2, ease: "power2.out" });
+
+    setThemeId(id);
+
+    const newIdx = THEMES.findIndex((t) => t.id === id);
+    const newSwatch = swatchesRef.current[newIdx];
+    if (newSwatch) {
+      gsap.fromTo(
+        newSwatch,
+        { scale: 1.25 },
+        { scale: 1, duration: 0.3, ease: "back.out(2)" }
+      );
+    }
+  };
 
   return (
     <section
       id="themes"
+      ref={sectionRef}
       className="relative overflow-hidden border-b border-border bg-background py-20 sm:py-28"
     >
       <div className="mx-auto max-w-6xl px-5">
@@ -55,13 +92,10 @@ export function ThemePreview() {
             {THEMES.map((t, idx) => {
               const isActive = t.id === themeId;
               return (
-                <motion.button
+                <button
                   key={t.id}
-                  initial={{ opacity: 0, y: 6 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.25, delay: idx * 0.02 }}
-                  onClick={() => setThemeId(t.id)}
+                  ref={(el) => (swatchesRef.current[idx] = el)}
+                  onClick={() => handleThemeChange(t.id)}
                   className={`group relative flex flex-col items-center gap-1.5 rounded-lg p-2.5 transition-all cursor-pointer ${
                     isActive
                       ? "ring-2 ring-primary bg-primary/5"
@@ -85,7 +119,7 @@ export function ThemePreview() {
                   >
                     {t.label}
                   </span>
-                </motion.button>
+                </button>
               );
             })}
           </div>

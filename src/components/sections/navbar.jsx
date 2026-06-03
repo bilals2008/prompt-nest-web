@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 import { motion, AnimatePresence } from "motion/react";
 import { IconDownload, IconMenu2, IconX } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
@@ -16,6 +18,8 @@ export function Navbar({ version }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
+  const headerRef = useRef(null);
+  const logoRef = useRef(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -24,19 +28,48 @@ export function Navbar({ version }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useGSAP(() => {
+    if (!headerRef.current) return;
+    if (scrolled) {
+      gsap.to(headerRef.current, {
+        borderColor: "var(--color-border)",
+        backgroundColor: "var(--color-background)",
+        backdropFilter: "blur(24px)",
+        duration: 0.3,
+        ease: "power2.out",
+        overwrite: "auto",
+      });
+    } else {
+      gsap.to(headerRef.current, {
+        borderColor: "transparent",
+        backgroundColor: "transparent",
+        backdropFilter: "blur(0px)",
+        duration: 0.3,
+        ease: "power2.out",
+        overwrite: "auto",
+      });
+    }
+  }, { scope: headerRef, dependencies: [scrolled] });
+
+  useGSAP(() => {
+    gsap.fromTo(
+      headerRef.current,
+      { y: -80, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }
+    );
+  }, { scope: headerRef });
+
   const isHome = pathname === "/";
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full border-b transition-colors ${
-        scrolled
-          ? "border-border/80 bg-background/80 backdrop-blur-xl"
-          : "border-transparent bg-transparent"
-      }`}
+      ref={headerRef}
+      className="sticky top-0 z-50 w-full border-b border-transparent bg-transparent"
     >
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
         <Link
           to="/"
+          ref={logoRef}
           className="flex items-center gap-2.5 cursor-pointer group"
           aria-label="Prompt Nest home"
         >

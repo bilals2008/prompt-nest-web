@@ -1,4 +1,7 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 import { motion } from "motion/react";
 import { IconHistory, IconListCheck, IconStar, IconArrowLeft } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
@@ -30,11 +33,29 @@ function VersionBadge({ type }) {
 }
 
 export function ChangelogPage() {
+  const releasesRef = useRef([]);
+  const headerRef = useRef(null);
+
+  useGSAP(() => {
+    gsap.fromTo(
+      releasesRef.current.filter(Boolean),
+      { opacity: 0, y: 30, scale: 0.97 },
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.5,
+        stagger: 0.08,
+        ease: "power3.out",
+      }
+    );
+  }, { scope: headerRef });
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
       <ScrollToHash />
-      <div className="mx-auto max-w-4xl px-5 pt-20 pb-24 sm:pt-28 sm:pb-32">
+      <div ref={headerRef} className="mx-auto max-w-4xl px-5 pt-20 pb-24 sm:pt-28 sm:pb-32">
         <motion.div
           initial="hidden"
           animate="show"
@@ -75,6 +96,7 @@ export function ChangelogPage() {
             return (
               <motion.div
                 key={release.version}
+                ref={(el) => (releasesRef.current[idx] = el)}
                 initial="hidden"
                 animate="show"
                 variants={fadeUp}

@@ -1,4 +1,10 @@
+import { forwardRef, useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion } from "motion/react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const FEATURES = [
   {
@@ -48,37 +54,55 @@ const fadeUp = {
   }),
 };
 
-const containerVariants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.15, delayChildren: 0.1 } },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, rotate: 0, x: 0, y: 60, scale: 0.85 },
-  show: (card) => ({
-    opacity: 1,
-    rotate: card.rotate,
-    x: card.x,
-    y: card.y,
-    scale: card.scale,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-  }),
-};
-
 export function Features() {
+  const sectionRef = useRef(null);
+  const rowsRef = useRef([]);
+  const headingRef = useRef(null);
+
+  useGSAP(() => {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: headingRef.current,
+        start: "top 85%",
+        toggleActions: "play none none reverse",
+      },
+    });
+    tl.fromTo(
+      headingRef.current,
+      { opacity: 0, y: 24 },
+      { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+    );
+
+    rowsRef.current.forEach((row, i) => {
+      if (!row) return;
+      const isEven = i % 2 === 0;
+      gsap.fromTo(
+        row,
+        { opacity: 0, x: isEven ? -40 : 40, y: 30 },
+        {
+          opacity: 1,
+          x: 0,
+          y: 0,
+          duration: 0.7,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: row,
+            start: "top 82%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+    });
+  }, { scope: sectionRef });
+
   return (
     <section
       id="features"
+      ref={sectionRef}
       className="relative overflow-hidden border-b border-border bg-background py-24 sm:py-32"
     >
       <div className="mx-auto max-w-6xl px-5">
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.5 }}
-          className="mb-20 text-center"
-        >
+        <div ref={headingRef} className="mb-20 text-center">
           <p className="text-xs font-medium uppercase tracking-wider text-primary">
             Features
           </p>
@@ -91,11 +115,16 @@ export function Features() {
             No bloated editor, no cloud lock-in, no accounts. Just a focused
             tool that gets out of your way.
           </p>
-        </motion.div>
+        </div>
 
         <div className="space-y-28">
           {FEATURES.map((feature, index) => (
-            <FeatureRow key={feature.title} feature={feature} index={index} reverse={index % 2 !== 0} />
+            <FeatureRow
+              key={feature.title}
+              feature={feature}
+              reverse={index % 2 !== 0}
+              ref={(el) => (rowsRef.current[index] = el)}
+            />
           ))}
         </div>
       </div>
@@ -103,11 +132,75 @@ export function Features() {
   );
 }
 
-function FeatureRow({ feature, reverse }) {
+const FeatureRow = forwardRef(({ feature, reverse }, rowRef) => {
+  const stackRef = useRef(null);
+
+  useGSAP(() => {
+    if (!stackRef.current) return;
+
+    const cards = stackRef.current.querySelectorAll("[data-card]");
+    gsap.set(cards, { transformPerspective: 800, x: 0, y: 0 });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: stackRef.current,
+        start: "top 85%",
+        toggleActions: "play none none reverse",
+      },
+    });
+
+    cards.forEach((card, i) => {
+      tl.fromTo(
+        card,
+        { opacity: 0, rotate: 0, x: 0, y: 60, scale: 0.85 },
+        {
+          opacity: 1,
+          rotate: STACK_CARDS[i].rotate,
+          x: STACK_CARDS[i].x,
+          y: STACK_CARDS[i].y,
+          scale: STACK_CARDS[i].scale,
+          duration: 0.6,
+          ease: "power2.out",
+        },
+        i === 0 ? 0 : "-=0.35"
+      );
+    });
+
+    stackRef.current.addEventListener("mousemove", (e) => {
+      const rect = stackRef.current.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+      cards.forEach((card, i) => {
+        gsap.to(card, {
+          rotateX: -y * (3 + i),
+          rotateY: x * (3 + i),
+          duration: 1,
+          ease: "power2.out",
+          overwrite: "auto",
+        });
+      });
+    });
+
+    stackRef.current.addEventListener("mouseleave", () => {
+      cards.forEach((card) => {
+        gsap.to(card, {
+          rotateX: 0,
+          rotateY: 0,
+          duration: 1.2,
+          ease: "power2.out",
+        });
+      });
+    });
+  }, { scope: stackRef });
+
   return (
-    <div className={`grid items-center gap-12 lg:grid-cols-2 lg:gap-20 ${reverse ? "lg:[direction:rtl]" : ""}`}>
+    <div
+      ref={rowRef}
+      className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20"
+    >
       <motion.div
-        className={reverse ? "lg:[direction:ltr]" : ""}
+        className={reverse ? "lg:order-2" : ""}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: "-100px" }}
@@ -122,19 +215,17 @@ function FeatureRow({ feature, reverse }) {
         </p>
       </motion.div>
 
-      <CardStack images={feature.images} />
+      <CardStack images={feature.images} stackRef={stackRef} />
     </div>
   );
-}
+});
 
-function CardStack({ images }) {
+function CardStack({ images, stackRef }) {
   return (
-    <motion.div
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, margin: "-100px" }}
-      variants={containerVariants}
+    <div
+      ref={stackRef}
       className="relative mx-auto h-[280px] w-full max-w-sm"
+      style={{ perspective: "800px" }}
     >
       <div className="absolute inset-0 flex items-center justify-center">
         <div
@@ -143,12 +234,11 @@ function CardStack({ images }) {
         />
       </div>
       {STACK_CARDS.map((card, i) => (
-        <motion.div
+        <div
           key={i}
-          custom={card}
-          variants={cardVariants}
-          className="absolute left-1/2 top-1/2 w-[85%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-xl border border-border bg-card shadow-xl"
-          style={{ zIndex: card.z }}
+          data-card
+          className="absolute left-1/2 top-1/2 w-[85%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-xl border border-border bg-card shadow-xl will-change-transform"
+          style={{ zIndex: card.z, transformStyle: "preserve-3d" }}
         >
           <div className="flex items-center gap-1.5 border-b border-border bg-muted/50 px-3 py-2">
             <span className="size-2 rounded-full bg-muted-foreground/20" />
@@ -166,8 +256,8 @@ function CardStack({ images }) {
               className="block size-full object-cover"
             />
           </div>
-        </motion.div>
+        </div>
       ))}
-    </motion.div>
+    </div>
   );
 }
