@@ -5,7 +5,7 @@
   "type": "module",
   "description": "Marketing website for Prompt Nest — a calm, native desktop app to organize, search, and reuse your AI prompts.",
   "author": "Muhammad Bilal Hassan",
-  "homepage": "",
+  "homepage": "https://promptnest-web.netlify.app",
   "repository": {
     "type": "git",
     "url": "https://github.com/Muhammad-Bilal-Hassan/prompt-nest-web"
