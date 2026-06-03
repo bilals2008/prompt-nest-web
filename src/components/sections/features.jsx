@@ -4,6 +4,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion } from "motion/react";
+import { Badge } from "@/components/ui/badge";
 import {
   IconFolder,
   IconSearch,
@@ -124,10 +125,11 @@ export function Features() {
 
       <div className="mx-auto max-w-6xl px-4 sm:px-5">
         <div ref={headingRef} className="mb-12 text-center sm:mb-16">
-          <p className="text-xs font-medium uppercase tracking-wider text-primary">
+          <Badge variant="tint" className="mb-4">
+            <IconFolder className="size-3" stroke={1.75} />
             Features
-          </p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
+          </Badge>
+          <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
             Everything you need, nothing you don&apos;t.
           </h2>
           <p className="mx-auto mt-4 max-w-3xl text-base text-muted-foreground sm:mt-5 sm:text-lg">

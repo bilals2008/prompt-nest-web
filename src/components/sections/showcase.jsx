@@ -3,6 +3,8 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { IconArrowsMove, IconSparkles, IconRefresh, IconCheck } from "@tabler/icons-react";
+import { Badge } from "@/components/ui/badge";
+import { IconLayoutSidebar } from "@tabler/icons-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -117,7 +119,10 @@ export function Showcase() {
       />
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-5 sm:py-20 lg:py-28">
         <div ref={headingRef} className="mx-auto max-w-2xl text-center">
-          <p className="text-xs font-medium uppercase tracking-wider text-primary">Walkthrough</p>
+          <Badge variant="tint" className="mb-4">
+            <IconLayoutSidebar className="size-3" stroke={1.75} />
+            Walkthrough
+          </Badge>
           <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
             A closer look at the details.
           </h2>

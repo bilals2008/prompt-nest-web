@@ -190,10 +190,11 @@ export function Download({ release }) {
           transition={{ duration: 0.4 }}
           className="mx-auto max-w-2xl text-center"
         >
-          <p className="text-xs font-medium uppercase tracking-wider text-primary">
+          <Badge variant="tint" className="mb-4">
+            <IconDownload className="size-3" stroke={1.75} />
             Download
-          </p>
-          <h2 className="mt-3 text-balance text-3xl font-medium tracking-tight text-foreground sm:text-4xl">
+          </Badge>
+          <h2 className="text-balance text-3xl font-medium tracking-tight text-foreground sm:text-4xl">
             Get Prompt Nest on your machine.
           </h2>
           <p className="mt-4 text-pretty text-base text-muted-foreground">
