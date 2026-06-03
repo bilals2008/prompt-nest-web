@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 import { IconDownload, IconArrowRight } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
@@ -75,15 +76,15 @@ export function Hero({ version }) {
             className="mt-10 flex flex-wrap items-center justify-center gap-4"
           >
             <Button asChild size="lg">
-              <a href="#download">
+              <Link to="#download">
                 <IconDownload className="size-4" stroke={1.75} />
                 Download for Free
-              </a>
+              </Link>
             </Button>
             <Button asChild size="lg" variant="outline">
-              <a href="#features">
+              <Link to="#features">
                 Learn more
-              </a>
+              </Link>
             </Button>
           </motion.div>
 
