@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@300..800&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -29,7 +29,7 @@
   --color-backdrop: var(--backdrop);
   --color-surface: var(--surface);
   --color-surface-foreground: var(--surface-foreground);
-  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-sans: "Sora", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
 }
 
@@ -97,8 +97,8 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-    font-feature-settings: "cv11", "ss01";
+    font-family: "Sora", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-feature-settings: "ss01";
   }
 }
 

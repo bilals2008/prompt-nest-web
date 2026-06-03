@@ -64,7 +64,7 @@ export function Hero({ version: _version }) {
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[800px] w-[1000px] -translate-x-1/2 bg-hero-glow opacity-50"
+        className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[760px] w-[1000px] -translate-x-1/2 bg-hero-glow opacity-50"
       />
       <div
         aria-hidden="true"
@@ -75,7 +75,7 @@ export function Hero({ version: _version }) {
         className="pointer-events-none absolute right-1/4 top-40 -z-10 h-[250px] w-[250px] rounded-full bg-primary/5 blur-[80px]"
       />
 
-      <div className="mx-auto max-w-6xl px-4 pt-16 pb-12 sm:px-5 sm:pt-24 sm:pb-20 lg:pt-32 lg:pb-28">
+      <div className="mx-auto max-w-6xl px-4 pt-16 pb-12 sm:px-5 sm:pt-20 sm:pb-16 lg:pt-24 lg:pb-20">
         <div className="flex flex-col items-center text-center">
           <motion.div
             initial="hidden"
@@ -83,18 +83,19 @@ export function Hero({ version: _version }) {
             variants={fadeUp}
             custom={0}
           >
-            <div className="group inline-flex items-center gap-2.5 rounded-full border border-primary/15 bg-primary/[0.03] px-1 pr-4 py-1 shadow-[0_0_30px_var(--color-primary)/0.05] transition-all duration-300 hover:border-primary/30 hover:shadow-[0_0_40px_var(--color-primary)/0.1]">
-              <span className="rounded-full bg-primary px-3 py-1 text-[11px] font-bold tracking-wider text-primary-foreground shadow-[0_0_12px_var(--color-primary)/0.4]">
+            <Link
+              to="#showcase"
+              className="group inline-flex items-center gap-2.5 rounded-full bg-primary/[0.08] px-1.5 py-1.5 pr-4 text-sm font-medium text-primary shadow-[inset_0_0_0_1px_var(--color-primary)/0.22,0_0_28px_var(--color-primary)/0.08] transition-all duration-300 hover:bg-primary/[0.12]"
+            >
+              <span className="rounded-full bg-primary px-3 py-1 text-[11px] font-bold tracking-wider text-primary-foreground shadow-[0_0_12px_var(--color-primary)/0.35]">
                 NEW
               </span>
-              <span className="text-sm text-muted-foreground">
-                Introducing Prompt Nest AI
-              </span>
+              <span className="text-muted-foreground">Introducing Prompt Nest AI</span>
               <IconArrowRight
                 className="size-3.5 text-muted-foreground transition-transform duration-300 group-hover:translate-x-0.5"
                 stroke={1.75}
               />
-            </div>
+            </Link>
           </motion.div>
 
           <motion.h1
@@ -102,11 +103,11 @@ export function Hero({ version: _version }) {
             animate="show"
             variants={fadeUp}
             custom={1}
-            className="mt-8 max-w-4xl text-balance text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl"
+            className="mt-7 max-w-5xl text-balance text-5xl font-bold tracking-tight text-foreground sm:text-6xl md:text-7xl lg:text-8xl"
           >
             All your AI prompts,
             <br className="hidden sm:block" />
-            <span className="bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-primary via-primary/85 to-primary bg-clip-text text-transparent">
               {" "}neatly nested.
             </span>
           </motion.h1>
@@ -116,7 +117,7 @@ export function Hero({ version: _version }) {
             animate="show"
             variants={fadeUp}
             custom={2}
-            className="mt-5 max-w-xl text-balance text-base text-muted-foreground sm:mt-6 sm:text-lg"
+            className="mt-5 max-w-2xl text-balance text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg"
           >
             A calm, native desktop app to organize, search, and reuse your
             prompts. Built for Windows, macOS, and Linux.
@@ -127,7 +128,7 @@ export function Hero({ version: _version }) {
             animate="show"
             variants={fadeUp}
             custom={3}
-            className="mt-8 flex flex-col items-center gap-3 sm:mt-10 sm:flex-row sm:gap-4"
+            className="mt-8 flex flex-col items-center gap-3 sm:mt-9 sm:flex-row sm:gap-4"
           >
             <Button asChild size="lg" className="w-full sm:w-auto">
               <Link to="#download">
@@ -153,7 +154,7 @@ export function Hero({ version: _version }) {
             animate="show"
             variants={fadeUp}
             custom={4}
-            className="mt-5 flex items-center justify-center gap-4 text-xs text-muted-foreground sm:mt-6"
+            className="mt-5 flex flex-wrap items-center justify-center gap-4 text-xs text-muted-foreground sm:mt-6"
           >
             <span className="flex items-center gap-1.5">
               <WindowsLogo className="size-3.5" />
@@ -174,10 +175,10 @@ export function Hero({ version: _version }) {
 
         <motion.div
           ref={previewRef}
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 34 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
-          className="mx-auto mt-14 max-w-4xl sm:mt-20"
+          transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.35 }}
+          className="mx-auto mt-12 max-w-5xl sm:mt-14"
           style={{ perspective: "1200px", transformStyle: "preserve-3d" }}
         >
           <div className="relative">
