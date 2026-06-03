@@ -2,7 +2,7 @@ import { forwardRef, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { IconArrowsMove, IconSparkles, IconRefresh } from "@tabler/icons-react";
+import { IconArrowsMove, IconSparkles, IconRefresh, IconCheck } from "@tabler/icons-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,6 +13,7 @@ const ITEMS = [
     title: "Workspaces that scale with you",
     body: "Nest folders inside folders. Drag prompts between workspaces. Your library stays clean even when it crosses 10,000 entries.",
     bullets: ["Unlimited workspaces", "Drag-and-drop reordering", "Folder nesting"],
+    color: "#6366f1",
     image: "https://placehold.co/1000x650/0c0c14/ededee?text=Workspaces",
     imageAlt: "Prompt Nest workspaces panel with nested folders",
   },
@@ -22,6 +23,7 @@ const ITEMS = [
     title: "Find any prompt in milliseconds",
     body: "Full-text search across titles, bodies, and tags. Filter by workspace, tag, or recency. The result updates as you type.",
     bullets: ["Live search-as-you-type", "Tag & workspace filters", "Recent & pinned shortcuts"],
+    color: "#f59e0b",
     image: "https://placehold.co/1000x650/0c0c14/ededee?text=Search+%26+Filter",
     imageAlt: "Prompt Nest search interface with results and filters",
     reverse: true,
@@ -32,6 +34,7 @@ const ITEMS = [
     title: "Always on the latest version",
     body: "Auto-updates run in the background. When a new release ships, you get a subtle prompt — not a surprise restart. Blockmap diffs keep downloads tiny.",
     bullets: ["Background auto-updates", "Differential downloads", "Zero surprise restarts"],
+    color: "#22d3ee",
     image: "https://placehold.co/1000x650/0c0c14/ededee?text=Auto+Updates",
     imageAlt: "Prompt Nest update notification and release notes",
   },
@@ -123,15 +126,22 @@ export function Showcase() {
           </p>
         </div>
 
-        <div className="relative mt-20 flex flex-col gap-28 sm:gap-36">
-          {ITEMS.map((item, i) => (
-            <ShowcaseBlock
-              key={item.title}
-              item={item}
-              index={i + 1}
-              ref={(el) => (itemsRef.current[i] = el)}
-            />
-          ))}
+        <div className="relative mt-20">
+          <div
+            aria-hidden="true"
+            className="absolute left-1/2 top-0 bottom-0 -z-10 hidden w-px bg-gradient-to-b from-transparent via-border to-transparent lg:block"
+          />
+
+          <div className="flex flex-col gap-28 sm:gap-36">
+            {ITEMS.map((item, i) => (
+              <ShowcaseBlock
+                key={item.title}
+                item={item}
+                index={i + 1}
+                ref={(el) => (itemsRef.current[i] = el)}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -139,7 +149,7 @@ export function Showcase() {
 }
 
 const ShowcaseBlock = forwardRef(({ item, index }, blockRef) => {
-  const { reverse, icon: Icon, eyebrow, title, body, bullets, image, imageAlt } = item;
+  const { reverse, icon: Icon, eyebrow, title, body, bullets, color, image, imageAlt } = item;
   const visualRef = useRef(null);
 
   useGSAP(() => {
@@ -173,32 +183,47 @@ const ShowcaseBlock = forwardRef(({ item, index }, blockRef) => {
         reverse ? "lg:grid-flow-col-dense" : ""
       } lg:grid-cols-2`}
     >
-      <div data-content className={reverse ? "lg:col-start-2" : ""}>
-        <div className="flex items-center gap-4">
-          <span
-            data-number
-            className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary/10 font-mono text-sm font-bold text-primary"
-          >
-            {String(index).padStart(2, "0")}
-          </span>
-          <div className="grid size-10 place-items-center rounded-xl border border-border bg-card text-foreground">
-            <Icon className="size-5" stroke={1.75} />
-          </div>
+      <div
+        data-number
+        className="absolute left-1/2 top-0 hidden -translate-x-1/2 lg:grid"
+      >
+        <div
+          className="grid size-12 place-items-center rounded-full border-2 font-mono text-sm font-bold"
+          style={{ borderColor: color, color, background: `${color}10` }}
+        >
+          {String(index).padStart(2, "0")}
         </div>
-        <p className="mt-6 text-xs font-semibold uppercase tracking-widest text-primary">{eyebrow}</p>
-        <h3 className="mt-2 text-balance text-2xl font-semibold tracking-tight sm:text-3xl">{title}</h3>
+      </div>
+
+      <div data-content className={reverse ? "lg:col-start-2" : ""}>
+        <div
+          className="mb-5 inline-flex items-center gap-2 rounded-full border px-3 py-1.5"
+          style={{ borderColor: `${color}30`, background: `${color}08` }}
+        >
+          <Icon className="size-4" style={{ color }} stroke={1.75} />
+          <span
+            className="text-xs font-semibold uppercase tracking-widest"
+            style={{ color }}
+          >
+            {eyebrow}
+          </span>
+        </div>
+
+        <h3 className="text-balance text-2xl font-semibold tracking-tight sm:text-3xl">{title}</h3>
         <p className="mt-4 text-pretty text-base leading-relaxed text-muted-foreground">{body}</p>
-        <ul className="mt-6 space-y-2.5">
+
+        <ul className="mt-6 space-y-3">
           {bullets.map((b) => (
             <li
               key={b}
               data-bullet
               className="flex items-center gap-3 text-sm text-foreground"
             >
-              <span className="grid size-5 shrink-0 place-items-center rounded-full border border-primary/30 bg-primary/5 text-primary">
-                <svg viewBox="0 0 12 12" className="size-2.5" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <path d="M2.5 6.5L5 9L9.5 3.5" strokeLinecap="round" />
-                </svg>
+              <span
+                className="grid size-6 shrink-0 place-items-center rounded-full"
+                style={{ background: `${color}15`, color }}
+              >
+                <IconCheck className="size-3.5" stroke={2.5} />
               </span>
               {b}
             </li>
@@ -216,13 +241,22 @@ const ShowcaseBlock = forwardRef(({ item, index }, blockRef) => {
           <div
             data-glow
             aria-hidden="true"
-            className="pointer-events-none absolute -inset-4 -z-10 rounded-3xl bg-primary/5 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
+            className="pointer-events-none absolute -inset-4 -z-10 rounded-3xl opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
+            style={{ background: `${color}12` }}
           />
-          <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-xl transition-shadow duration-500 group-hover:shadow-[0_0_40px_var(--color-primary)/0.1]">
+
+          <div
+            className="absolute -inset-px rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+            style={{
+              background: `linear-gradient(135deg, ${color}25, transparent 50%, ${color}12)`,
+            }}
+          />
+
+          <div className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-xl transition-all duration-500 group-hover:border-transparent group-hover:shadow-2xl">
             <div className="flex items-center gap-1.5 border-b border-border bg-muted/40 px-4 py-2.5">
               <span className="size-2.5 rounded-full bg-destructive/70" />
               <span className="size-2.5 rounded-full bg-warning/70" />
-              <span className="size-2.5 rounded-full bg-primary/70" />
+              <span className="size-2.5 rounded-full" style={{ background: `${color}70` }} />
               <div className="ml-3 flex-1 text-center text-[11px] font-medium text-muted-foreground">
                 Prompt Nest
               </div>
@@ -237,9 +271,11 @@ const ShowcaseBlock = forwardRef(({ item, index }, blockRef) => {
               />
             </div>
           </div>
+
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -bottom-6 left-[10%] right-[10%] -z-10 h-8 rounded-[50%] bg-black/20 blur-xl transition-all duration-500 group-hover:scale-110 group-hover:opacity-80"
+            className="pointer-events-none absolute -bottom-6 left-[10%] right-[10%] -z-10 h-8 rounded-[50%] blur-xl transition-all duration-500 group-hover:scale-110 group-hover:opacity-80"
+            style={{ background: `${color}20` }}
           />
         </div>
       </div>
