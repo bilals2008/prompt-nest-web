@@ -1,7 +1,10 @@
 import { motion } from "motion/react";
-import { IconDownload, IconArrowRight, IconBrandWindows, IconBrandApple } from "@tabler/icons-react";
+import { IconDownload, IconArrowRight } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { WindowsLogo } from "@/components/icons/windows-logo";
+import { AppleLogo } from "@/components/icons/apple-logo";
+import { LinuxLogo } from "@/components/icons/linux-logo";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 12 },
@@ -92,21 +95,15 @@ export function Hero({ version }) {
             className="mt-6 flex items-center justify-center gap-5 text-xs text-muted-foreground"
           >
             <span className="flex items-center gap-1.5">
-              <IconBrandWindows className="size-3.5" stroke={1.75} />
+              <WindowsLogo className="size-3.5" />
               Windows
             </span>
             <span className="flex items-center gap-1.5">
-              <IconBrandApple className="size-3.5" stroke={1.75} />
+              <AppleLogo className="size-3.5" />
               macOS
             </span>
             <span className="flex items-center gap-1.5">
-              <svg className="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M4 8V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2" />
-                <path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
-                <path d="M2 12h20" />
-                <circle cx="8" cy="12" r="1" />
-                <circle cx="16" cy="12" r="1" />
-              </svg>
+              <LinuxLogo className="size-3.5" />
               Linux
             </span>
           </motion.div>
