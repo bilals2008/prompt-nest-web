@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 import { IconDownload, IconArrowRight } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { WindowsLogo } from "@/components/icons/windows-logo";
 import { AppleLogo } from "@/components/icons/apple-logo";
 import { LinuxLogo } from "@/components/icons/linux-logo";
@@ -38,11 +37,11 @@ export function Hero({ version }) {
             variants={fadeUp}
             custom={0}
           >
-            <Badge variant="muted" className="gap-2 border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm">
-              <span className="rounded bg-primary/20 px-2 py-0.5 text-xs font-semibold text-primary">NEW</span>
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/[0.04] px-4 py-1.5 text-sm shadow-[0_0_20px_var(--color-primary)/0.06]">
+              <span className="rounded-full bg-primary px-2.5 py-0.5 text-[11px] font-semibold tracking-wider text-primary-foreground shadow-[0_0_10px_var(--color-primary)/0.3]">NEW</span>
               <span className="text-muted-foreground">Introducing Prompt Nest AI</span>
               <IconArrowRight className="size-3.5 text-muted-foreground" stroke={1.75} />
-            </Badge>
+            </div>
           </motion.div>
 
           <motion.h1
