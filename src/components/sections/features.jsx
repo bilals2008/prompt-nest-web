@@ -127,14 +127,11 @@ export function Features() {
           <p className="text-xs font-medium uppercase tracking-wider text-primary">
             Features
           </p>
-          <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
-            Everything you need,
-            <br className="hidden sm:block" />
-            <span className="text-muted-foreground"> nothing you don&apos;t.</span>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
+            Everything you need, nothing you don&apos;t.
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-balance text-base text-muted-foreground sm:mt-5 sm:text-lg">
-            No bloated editor, no cloud lock-in, no accounts. Just a focused
-            tool that gets out of your way.
+          <p className="mx-auto mt-4 max-w-3xl text-base text-muted-foreground sm:mt-5 sm:text-lg">
+            No bloated editor, no cloud lock-in, no accounts. Just a focused tool that gets out of your way.
           </p>
         </div>
 
