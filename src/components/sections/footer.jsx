@@ -35,10 +35,8 @@ export function Footer() {
               rel="noreferrer"
               className="cursor-pointer font-medium text-foreground transition-colors hover:text-primary"
             >
-              @bilals2008
+              Muhammad Bilal Hassan
             </a>
-            <span className="text-border">/</span>
-            <span>MIT License</span>
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground">
