@@ -1,0 +1,151 @@
+{
+  "releases": [
+    {
+      "version": "0.1.0",
+      "date": "May 31, 2026",
+      "type": "stable",
+      "changes": [
+        "Full settings system: General, Appearance, Editor, Notifications, Database, Shortcuts, About",
+        "Auto-save prompts with configurable delay",
+        "Compact mode for tighter spacing",
+        "Adjustable font size (Small, Medium, Large)",
+        "Default startup view selector",
+        "Editor modes: Simple, Markdown, Split view",
+        "Spell check toggle in editor",
+        "Confirm before delete dialog",
+        "Backup reminder notifications",
+        "Update notification control",
+        "Theme-aware dropdowns (Radix Select)",
+        "Fixed PromptEditor favorite toggle crash"
+      ]
+    },
+    {
+      "version": "0.0.10-beta",
+      "date": "May 30, 2026",
+      "type": "beta",
+      "changes": [
+        "New Midnight theme with deep purple tones",
+        "QuickPrompt-style theme picker with color preview cards",
+        "Upcoming themes showcase in Appearance settings"
+      ]
+    },
+    {
+      "version": "0.0.9-beta",
+      "date": "May 26, 2026",
+      "type": "beta",
+      "changes": [
+        "Onboarding tour with interactive step-by-step guide (react-joyride)",
+        "Rich HTML rendering in update dialog release notes",
+        "Auto-open update dialog when a new version is detected",
+        "Stable asset uploads using curl instead of native fetch"
+      ]
+    },
+    {
+      "version": "0.0.8-beta",
+      "date": "May 26, 2026",
+      "type": "beta",
+      "changes": [
+        "Migrated from lucide-react to @tabler/icons-react for all icons",
+        "Markdown support & preview mode in the prompt editor",
+        "Prompt pinning — pin important prompts to the top",
+        "Prompt batch actions — bulk delete, favorite/unfavorite, move to collections",
+        "Collection batch delete — remove multiple collections at once"
+      ]
+    },
+    {
+      "version": "0.0.7-beta",
+      "date": "May 24, 2026",
+      "type": "beta",
+      "changes": [
+        "Refactored theme system: custom ThemeProvider with data-theme attribute",
+        "Replaced next-themes with zero-dependency custom hook (useTheme)",
+        "Multi-theme support: Light, Dark, Forest, Ocean, System (auto OS)",
+        "Theme persists via localStorage, loads automatically on startup",
+        "CSS variable architecture for all shadcn semantic tokens",
+        "Smooth theme transitions (150ms ease on bg, border, color)",
+        "Fixed hardcoded colors across all UI components (overlays, inputs, toggles)",
+        "Professional SaaS-style theming with type-to-scale contrast",
+        "Prepared architecture for adding unlimited new themes"
+      ]
+    },
+    {
+      "version": "0.0.6-beta",
+      "date": "May 24, 2026",
+      "type": "beta",
+      "changes": [
+        "Added custom app icon and branding assets",
+        "White logo variant for light mode in sidebar",
+        "Update dialog improvements: speed display, pause/resume, release notes",
+        "Added Check for Updates button in Settings > About",
+        "Enhanced Settings: auto-start toggle, disk free, uptime, session count"
+      ]
+    },
+    {
+      "version": "0.0.5-beta",
+      "date": "May 24, 2026",
+      "type": "beta",
+      "changes": [
+        "Templates system: create, reuse, and delete prompt templates",
+        "Dashboard stats with trend indicators and descriptions",
+        "Data pagination for All Prompts page",
+        "Export and import functionality",
+        "Notes field added to prompts schema",
+        "Color-coded collection tags",
+        "Reusable loading and empty state components"
+      ]
+    },
+    {
+      "version": "0.0.4-beta",
+      "date": "May 24, 2026",
+      "type": "beta",
+      "changes": [
+        "Settings page with sections: General, Appearance, Database, About",
+        "Keyboard shortcuts reference",
+        "Database backup and folder access",
+        "Start on system boot toggle (Windows)",
+        "About section with app info, versions, storage stats",
+        "GitHub repository link",
+        "Improved sidebar: collapsible, tooltips, theme label"
+      ]
+    },
+    {
+      "version": "0.0.3-beta",
+      "date": "May 24, 2026",
+      "type": "beta",
+      "changes": [
+        "Quick Patch updates (small differential downloads instead of full installer)",
+        "Download speed and file size display",
+        "Pause / Resume download functionality",
+        "Markdown changelog in update dialog",
+        "Fixed 'Invalid package' error handling"
+      ]
+    },
+    {
+      "version": "0.0.2-beta",
+      "date": "May 23, 2026",
+      "type": "beta",
+      "changes": [
+        "Auto-update system with electron-updater",
+        "Changelog page with version history",
+        "Activity logging and recent activity page",
+        "Search functionality with filters",
+        "Favorites page",
+        "Collection management"
+      ]
+    },
+    {
+      "version": "0.0.1-beta",
+      "date": "May 23, 2026",
+      "type": "beta",
+      "changes": [
+        "Initial beta release",
+        "Prompt management and organization",
+        "Collections and favorites",
+        "Import / Export support",
+        "Light/Dark mode with refined color palette",
+        "Self-hosted Outfit font",
+        "SQLite3 database backend"
+      ]
+    }
+  ]
+}

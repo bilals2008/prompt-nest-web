@@ -1,13 +1,14 @@
+import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import { useLatestRelease } from "@/hooks/use-latest-release";
 import { Navbar } from "@/components/sections/navbar";
 import { Hero } from "@/components/sections/hero";
 import { Features } from "@/components/sections/features";
 import { Download } from "@/components/sections/download";
-import { Changelog } from "@/components/sections/changelog";
 import { Footer } from "@/components/sections/footer";
+import { ChangelogPage } from "@/components/pages/changelog-page";
 
-function App() {
+function HomePage() {
   const release = useLatestRelease();
 
   return (
@@ -18,7 +19,6 @@ function App() {
           <Hero version={release.version} />
           <Features />
           <Download release={release} />
-          <Changelog />
         </main>
         <Footer />
       </div>
@@ -26,5 +26,13 @@ function App() {
   );
 }
 
-export default App;
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/changelog" element={<ChangelogPage />} />
+    </Routes>
+  );
+}
 
+export default App;
