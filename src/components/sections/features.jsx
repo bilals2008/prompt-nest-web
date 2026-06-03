@@ -3,95 +3,110 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion } from "motion/react";
+import {
+  IconFolder,
+  IconSearch,
+  IconKeyboard,
+  IconPalette,
+  IconDatabase,
+  IconCpu,
+  IconArrowRight,
+} from "@tabler/icons-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const FEATURES = [
   {
+    icon: IconFolder,
     title: "Workspaces & folders",
-    body: "Group prompts by project, client, or topic. Drag, nest, and reorganize without breaking workflows. Keep your prompt library structured the way your mind works.",
-    images: ["Organized+Workspaces", "Drag+and+Drop", "Folder+Tree"],
+    body: "Group prompts by project, client, or topic. Nest, drag, and reorganize without breaking workflows.",
+    color: "#6366f1",
   },
   {
+    icon: IconSearch,
     title: "Instant search",
-    body: "Full text search across every prompt, tag, and note. Find the right one in milliseconds. No more scrolling through endless lists.",
-    images: ["Search+Bar", "Filter+Results", "Quick+Find"],
+    body: "Full text search across every prompt, tag, and note. Find the right one in milliseconds.",
+    color: "#f59e0b",
   },
   {
+    icon: IconKeyboard,
     title: "Keyboard-first",
-    body: "Every action has a shortcut. Open the palette, copy, paste, switch workspaces — without leaving the keys. Speed without compromise.",
-    images: ["Command+Palette", "Keyboard+Shortcuts", "Quick+Actions"],
+    body: "Every action has a shortcut. Open the palette, copy, paste, switch workspaces — without leaving the keys.",
+    color: "#22d3ee",
   },
   {
-    title: "Themable",
-    body: "15+ hand-tuned themes including dark, light, and vibrant accents. Pick what matches your setup. Make it truly yours.",
-    images: ["Dark+Theme", "Light+Theme", "Vibrant+Accents"],
+    icon: IconPalette,
+    title: "15+ hand-tuned themes",
+    body: "Dark, light, vibrant accents. Pick what matches your setup. Make it truly yours.",
+    color: "#f472b6",
   },
   {
+    icon: IconDatabase,
     title: "Local-first & private",
-    body: "Your prompts live in a local SQLite database. No accounts, no cloud, no telemetry. You own the data. Period.",
-    images: ["Local+Storage", "No+Cloud", "Your+Data"],
+    body: "Your prompts live in a local SQLite database. No accounts, no cloud, no telemetry. You own the data.",
+    color: "#34d399",
   },
   {
+    icon: IconCpu,
     title: "Native & fast",
     body: "Built on Electron with a tiny footprint. Launches instantly, stays out of your way. Pure performance.",
-    images: ["Lightning+Fast", "Native+App", "Zero+Bloat"],
+    color: "#fb923c",
   },
 ];
-
-const STACK_CARDS = [
-  { rotate: -6, x: -32, y: 12, scale: 0.88, z: 0 },
-  { rotate: 6, x: 32, y: 12, scale: 0.88, z: 1 },
-  { rotate: 0, x: 0, y: 0, scale: 1, z: 2 },
-];
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  show: (i = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: i * 0.1 },
-  }),
-};
 
 export function Features() {
   const sectionRef = useRef(null);
-  const rowsRef = useRef([]);
   const headingRef = useRef(null);
+  const gridRef = useRef(null);
+  const cardsRef = useRef([]);
 
   useGSAP(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: headingRef.current,
-        start: "top 85%",
-        toggleActions: "play none none reverse",
-      },
-    });
-    tl.fromTo(
+    gsap.fromTo(
       headingRef.current,
       { opacity: 0, y: 24 },
-      { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: headingRef.current,
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+      }
     );
 
-    rowsRef.current.forEach((row, i) => {
-      if (!row) return;
-      const isEven = i % 2 === 0;
+    cardsRef.current.forEach((card, i) => {
+      if (!card) return;
       gsap.fromTo(
-        row,
-        { opacity: 0, x: isEven ? -40 : 40, y: 30 },
+        card,
+        { opacity: 0, y: 40, scale: 0.95 },
         {
           opacity: 1,
-          x: 0,
           y: 0,
-          duration: 0.7,
-          ease: "power2.out",
+          scale: 1,
+          duration: 0.6,
+          delay: i * 0.08,
+          ease: "power3.out",
           scrollTrigger: {
-            trigger: row,
-            start: "top 82%",
+            trigger: gridRef.current,
+            start: "top 80%",
             toggleActions: "play none none reverse",
           },
         }
       );
+
+      const inner = card.querySelector("[data-bento-inner]");
+      if (!inner) return;
+
+      card.addEventListener("mousemove", (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        inner.style.setProperty("--mouse-x", `${x}%`);
+        inner.style.setProperty("--mouse-y", `${y}%`);
+      });
     });
   }, { scope: sectionRef });
 
@@ -99,31 +114,38 @@ export function Features() {
     <section
       id="features"
       ref={sectionRef}
-      className="relative overflow-hidden border-b border-border bg-background py-24 sm:py-32"
+      className="relative overflow-hidden border-b border-border bg-background py-16 sm:py-24 lg:py-32"
     >
-      <div className="mx-auto max-w-6xl px-5">
-        <div ref={headingRef} className="mb-20 text-center">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-1/3 -z-10 h-[500px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/5 blur-[120px]"
+      />
+
+      <div className="mx-auto max-w-6xl px-4 sm:px-5">
+        <div ref={headingRef} className="mb-12 text-center sm:mb-16">
           <p className="text-xs font-medium uppercase tracking-wider text-primary">
             Features
           </p>
-          <h2 className="mt-3 text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
-            Built for the way you
+          <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
+            Everything you need,
             <br className="hidden sm:block" />
-            <span className="text-muted-foreground"> actually work with prompts.</span>
+            <span className="text-muted-foreground"> nothing you don&apos;t.</span>
           </h2>
-          <p className="mx-auto mt-5 max-w-2xl text-balance text-lg text-muted-foreground">
+          <p className="mx-auto mt-4 max-w-2xl text-balance text-base text-muted-foreground sm:mt-5 sm:text-lg">
             No bloated editor, no cloud lock-in, no accounts. Just a focused
             tool that gets out of your way.
           </p>
         </div>
 
-        <div className="space-y-28">
-          {FEATURES.map((feature, index) => (
-            <FeatureRow
+        <div
+          ref={gridRef}
+          className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3"
+        >
+          {FEATURES.map((feature, i) => (
+            <BentoCard
               key={feature.title}
               feature={feature}
-              reverse={index % 2 !== 0}
-              ref={(el) => (rowsRef.current[index] = el)}
+              ref={(el) => (cardsRef.current[i] = el)}
             />
           ))}
         </div>
@@ -132,132 +154,65 @@ export function Features() {
   );
 }
 
-const FeatureRow = forwardRef(({ feature, reverse }, rowRef) => {
-  const stackRef = useRef(null);
-
-  useGSAP(() => {
-    if (!stackRef.current) return;
-
-    const cards = stackRef.current.querySelectorAll("[data-card]");
-    gsap.set(cards, { transformPerspective: 800, x: 0, y: 0 });
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: stackRef.current,
-        start: "top 85%",
-        toggleActions: "play none none reverse",
-      },
-    });
-
-    cards.forEach((card, i) => {
-      tl.fromTo(
-        card,
-        { opacity: 0, rotate: 0, x: 0, y: 60, scale: 0.85 },
-        {
-          opacity: 1,
-          rotate: STACK_CARDS[i].rotate,
-          x: STACK_CARDS[i].x,
-          y: STACK_CARDS[i].y,
-          scale: STACK_CARDS[i].scale,
-          duration: 0.6,
-          ease: "power2.out",
-        },
-        i === 0 ? 0 : "-=0.35"
-      );
-    });
-
-    stackRef.current.addEventListener("mousemove", (e) => {
-      const rect = stackRef.current.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-      cards.forEach((card, i) => {
-        gsap.to(card, {
-          rotateX: -y * (3 + i),
-          rotateY: x * (3 + i),
-          duration: 1,
-          ease: "power2.out",
-          overwrite: "auto",
-        });
-      });
-    });
-
-    stackRef.current.addEventListener("mouseleave", () => {
-      cards.forEach((card) => {
-        gsap.to(card, {
-          rotateX: 0,
-          rotateY: 0,
-          duration: 1.2,
-          ease: "power2.out",
-        });
-      });
-    });
-  }, { scope: stackRef });
+const BentoCard = forwardRef(({ feature }, cardRef) => {
+  const { icon: Icon, title, body, color } = feature;
+  const innerRef = useRef(null);
 
   return (
     <div
-      ref={rowRef}
-      className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20"
+      ref={cardRef}
+      className="group relative min-h-[180px] sm:min-h-[200px]"
     >
-      <motion.div
-        className={reverse ? "lg:order-2" : ""}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={fadeUp}
-        custom={0}
+      <div
+        ref={innerRef}
+        data-bento-inner
+        className="relative h-full overflow-hidden rounded-xl border border-border bg-card p-5 transition-all duration-500 hover:border-transparent sm:rounded-2xl sm:p-6 lg:p-7"
       >
-        <h3 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-          {feature.title}
-        </h3>
-        <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-          {feature.body}
-        </p>
-      </motion.div>
-
-      <CardStack images={feature.images} stackRef={stackRef} />
-    </div>
-  );
-});
-
-function CardStack({ images, stackRef }) {
-  return (
-    <div
-      ref={stackRef}
-      className="relative mx-auto h-[280px] w-full max-w-sm"
-      style={{ perspective: "800px" }}
-    >
-      <div className="absolute inset-0 flex items-center justify-center">
         <div
-          aria-hidden="true"
-          className="absolute h-64 w-80 rounded-3xl bg-backdrop opacity-60 blur-3xl"
+          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          style={{
+            background: `radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), ${color}08, transparent 50%)`,
+          }}
         />
-      </div>
-      {STACK_CARDS.map((card, i) => (
         <div
-          key={i}
-          data-card
-          className="absolute left-1/2 top-1/2 w-[85%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-xl border border-border bg-card shadow-xl will-change-transform"
-          style={{ zIndex: card.z, transformStyle: "preserve-3d" }}
-        >
-          <div className="flex items-center gap-1.5 border-b border-border bg-muted/50 px-3 py-2">
-            <span className="size-2 rounded-full bg-muted-foreground/20" />
-            <span className="size-2 rounded-full bg-muted-foreground/20" />
-            <span className="size-2 rounded-full bg-muted-foreground/20" />
-            <div className="ml-3 flex-1 text-center text-[10px] font-medium text-muted-foreground">
-              Prompt Nest
-            </div>
+          className="absolute -inset-px rounded-xl opacity-0 transition-opacity duration-500 group-hover:opacity-100 sm:rounded-2xl"
+          style={{
+            background: `linear-gradient(135deg, ${color}20, transparent 40%, ${color}10)`,
+          }}
+        />
+
+        <div className="relative flex h-full flex-col">
+          <div
+            className="mb-3 inline-flex size-10 items-center justify-center rounded-lg transition-all duration-300 group-hover:scale-110 sm:mb-5 sm:size-12 sm:rounded-xl"
+            style={{ background: `${color}12` }}
+          >
+            <Icon className="size-5 sm:size-6" style={{ color }} stroke={1.5} />
           </div>
-          <div className="aspect-video bg-muted/30">
-            <img
-              src={`https://placehold.co/800x500/12121a/ededee?text=${images[i]}`}
-              alt=""
-              loading="lazy"
-              className="block size-full object-cover"
+
+          <h3 className="text-base font-semibold tracking-tight text-foreground sm:text-lg">
+            {title}
+          </h3>
+          <p className="mt-1.5 flex-1 text-xs leading-relaxed text-muted-foreground sm:mt-2 sm:text-sm">
+            {body}
+          </p>
+
+          <div
+            className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium opacity-0 transition-all duration-300 group-hover:opacity-100 sm:mt-5"
+            style={{ color }}
+          >
+            Learn more
+            <IconArrowRight
+              className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5"
+              stroke={2}
             />
           </div>
         </div>
-      ))}
+
+        <div
+          className="pointer-events-none absolute -bottom-20 -right-20 size-40 rounded-full opacity-[0.03] transition-opacity duration-500 group-hover:opacity-[0.08]"
+          style={{ background: color }}
+        />
+      </div>
     </div>
   );
-}
+});

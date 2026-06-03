@@ -115,7 +115,7 @@ export function Showcase() {
         aria-hidden="true"
         className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[600px] w-[800px] -translate-x-1/2 bg-hero-glow opacity-20"
       />
-      <div className="mx-auto max-w-6xl px-5 py-20 sm:py-28">
+      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-5 sm:py-20 lg:py-28">
         <div ref={headingRef} className="mx-auto max-w-2xl text-center">
           <p className="text-xs font-medium uppercase tracking-wider text-primary">Walkthrough</p>
           <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
@@ -132,7 +132,7 @@ export function Showcase() {
             className="absolute left-1/2 top-0 bottom-0 -z-10 hidden w-px bg-gradient-to-b from-transparent via-border to-transparent lg:block"
           />
 
-          <div className="flex flex-col gap-28 sm:gap-36">
+          <div className="flex flex-col gap-16 sm:gap-20 lg:gap-28">
             {ITEMS.map((item, i) => (
               <ShowcaseBlock
                 key={item.title}
@@ -179,7 +179,7 @@ const ShowcaseBlock = forwardRef(({ item, index }, blockRef) => {
   return (
     <div
       ref={blockRef}
-      className={`relative grid items-center gap-10 lg:gap-16 ${
+      className={`relative grid items-center gap-8 sm:gap-10 lg:gap-16 ${
         reverse ? "lg:grid-flow-col-dense" : ""
       } lg:grid-cols-2`}
     >
