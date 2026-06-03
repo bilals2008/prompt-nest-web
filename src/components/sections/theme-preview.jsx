@@ -90,7 +90,7 @@ export function ThemePreview() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.4 }}
-          className="mx-auto max-w-3xl text-center"
+          className="mx-auto max-w-3xl text-center lg:max-w-4xl"
         >
           <div className="mx-auto inline-flex items-center gap-2 rounded-full bg-primary/[0.09] px-2.5 py-1.5 text-xs font-semibold text-primary shadow-[inset_0_0_0_1px_var(--color-primary)/0.28,0_0_24px_var(--color-primary)/0.08]">
             <span className="grid size-5 place-items-center rounded-full bg-primary text-primary-foreground shadow-[0_0_14px_var(--color-primary)/0.35]">
@@ -104,8 +104,8 @@ export function ThemePreview() {
           <h2 className="mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
             Make the whole app feel like yours.
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-balance text-base text-muted-foreground sm:text-lg">
-            Pick a palette once and the interface responds instantly across every screen.
+          <p className="mx-auto mt-4 max-w-xl text-balance text-base text-muted-foreground sm:text-lg">
+            Pick a palette once and the interface responds instantly.
           </p>
         </motion.div>
 
