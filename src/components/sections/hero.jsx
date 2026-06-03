@@ -103,12 +103,12 @@ export function Hero({ version: _version }) {
             animate="show"
             variants={fadeUp}
             custom={1}
-            className="mt-7 max-w-5xl text-balance text-5xl font-bold tracking-tight text-foreground sm:text-6xl md:text-7xl lg:text-8xl"
+            className="mt-7 max-w-5xl text-balance font-[var(--font-display)] text-5xl font-bold italic tracking-normal text-foreground sm:text-6xl md:text-7xl lg:text-8xl"
           >
-            All your AI prompts,
+            Your prompt library,
             <br className="hidden sm:block" />
             <span className="bg-gradient-to-r from-primary via-primary/85 to-primary bg-clip-text text-transparent">
-              {" "}neatly nested.
+              {" "}finally in order.
             </span>
           </motion.h1>
 
@@ -203,11 +203,13 @@ export function Hero({ version: _version }) {
                   Prompt Nest
                 </div>
               </div>
-              <div className="flex aspect-video items-center justify-center bg-muted/20">
+              <div className="group/img relative flex aspect-video items-center justify-center overflow-hidden bg-muted/20">
+                <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover/img:opacity-100" />
+                <div className="absolute inset-0 z-10 -translate-x-full bg-gradient-to-r from-transparent via-white/[0.04] to-transparent transition-transform duration-700 group-hover/img:translate-x-full" />
                 <img
                   src="https://placehold.co/1200x675/12121a/7d7d9e?text=App+Screenshot"
                   alt="Prompt Nest app preview"
-                  className="block size-full object-cover"
+                  className="block size-full object-cover transition-transform duration-700 ease-out group-hover/img:scale-105"
                 />
               </div>
             </div>

@@ -261,13 +261,15 @@ const ShowcaseBlock = forwardRef(({ item, index }, blockRef) => {
                 Prompt Nest
               </div>
             </div>
-            <div className="overflow-hidden">
+            <div className="group/img relative overflow-hidden">
+              <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/15 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover/img:opacity-100" />
+              <div className="absolute inset-0 z-10 -translate-x-full bg-gradient-to-r from-transparent via-white/[0.04] to-transparent transition-transform duration-700 group-hover/img:translate-x-full" />
               <img
                 data-parallax-img
                 src={image}
                 alt={imageAlt}
                 loading="lazy"
-                className="block w-full will-change-transform"
+                className="block w-full transition-transform duration-700 ease-out will-change-transform group-hover/img:scale-[1.03]"
               />
             </div>
           </div>

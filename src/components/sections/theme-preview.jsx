@@ -156,15 +156,15 @@ export function ThemePreview() {
                               aria-hidden="true"
                             >
                               <span
-                                className="flex-[1.4]"
+                                className="flex-[1.4] transition-all duration-300 group-hover:scale-x-110 group-hover:brightness-110"
                                 style={{ background: t.tokens.background }}
                               />
                               <span
-                                className="flex-1"
+                                className="flex-1 transition-all duration-300 group-hover:brightness-110"
                                 style={{ background: t.tokens.card }}
                               />
                               <span
-                                className="flex-[0.8]"
+                                className="flex-[0.8] transition-all duration-300 group-hover:scale-x-110 group-hover:brightness-110"
                                 style={{ background: t.tokens.primary }}
                               />
                             </div>
