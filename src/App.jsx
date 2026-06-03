@@ -3,7 +3,6 @@ import { useLatestRelease } from "@/hooks/use-latest-release";
 import { Navbar } from "@/components/sections/navbar";
 import { Hero } from "@/components/sections/hero";
 import { Features } from "@/components/sections/features";
-import { Showcase } from "@/components/sections/showcase";
 import { Download } from "@/components/sections/download";
 import { Changelog } from "@/components/sections/changelog";
 import { Footer } from "@/components/sections/footer";
@@ -18,7 +17,6 @@ function App() {
         <main>
           <Hero version={release.version} />
           <Features />
-          <Showcase />
           <Download release={release} />
           <Changelog />
         </main>

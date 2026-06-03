@@ -2,11 +2,9 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { IconDownload, IconMenu2, IconX } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
-import { ModeToggle } from "@/components/mode-toggle";
 
 const LINKS = [
   { label: "Features", href: "#features" },
-  { label: "Showcase", href: "#showcase" },
   { label: "Download", href: "#download" },
   { label: "Changelog", href: "#changelog" },
 ];
@@ -60,7 +58,6 @@ export function Navbar({ version }) {
         </div>
 
         <div className="flex items-center gap-2">
-          <ModeToggle />
           <Button asChild size="sm" className="hidden sm:inline-flex">
             <a href="#download">
               <IconDownload className="size-4" stroke={1.75} />
