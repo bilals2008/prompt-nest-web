@@ -3,16 +3,19 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion } from "motion/react";
-import { IconPalette, IconCheck, IconSparkles } from "@tabler/icons-react";
+import {
+  IconCheck,
+  IconSparkles,
+} from "@tabler/icons-react";
 import { useTheme } from "@/components/theme-provider";
 import { THEMES } from "@/data/themes";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const GROUPS = [
-  { key: "light", label: "Light" },
-  { key: "dark", label: "Dark" },
-  { key: "color", label: "Vibrant" },
+  { key: "light", label: "Light", hint: "Clean daylight palettes" },
+  { key: "dark", label: "Dark", hint: "Low-glare workspace tones" },
+  { key: "color", label: "Vibrant", hint: "High-contrast accents" },
 ];
 
 function getGroup(id) {
@@ -66,8 +69,6 @@ export function ThemePreview() {
     }
   };
 
-  const activeTheme = THEMES.find((t) => t.id === themeId);
-
   return (
     <section
       id="themes"
@@ -76,7 +77,11 @@ export function ThemePreview() {
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[400px] w-[600px] -translate-x-1/2 rounded-full bg-primary/5 blur-[100px]"
+        className="pointer-events-none absolute inset-0 -z-10 bg-grid-pattern opacity-[0.025]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[620px] w-[920px] -translate-x-1/2 bg-hero-glow opacity-30"
       />
 
       <div className="mx-auto max-w-6xl px-4 sm:px-5">
@@ -85,32 +90,52 @@ export function ThemePreview() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.4 }}
-          className="text-center"
+          className="mx-auto max-w-3xl text-center"
         >
-          <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/[0.04] px-3 py-1.5 text-xs font-medium text-primary">
-            <IconSparkles className="size-3.5" stroke={1.75} />
-            19 hand-tuned themes
+          <div className="mx-auto inline-flex items-center gap-2 rounded-full bg-primary/[0.09] px-2.5 py-1.5 text-xs font-semibold text-primary shadow-[inset_0_0_0_1px_var(--color-primary)/0.28,0_0_24px_var(--color-primary)/0.08]">
+            <span className="grid size-5 place-items-center rounded-full bg-primary text-primary-foreground shadow-[0_0_14px_var(--color-primary)/0.35]">
+              <IconSparkles className="size-3" stroke={2} />
+            </span>
+            Theme studio
+            <span className="rounded-full bg-background/70 px-2 py-0.5 text-[10px] font-semibold text-muted-foreground">
+              {THEMES.length}
+            </span>
           </div>
           <h2 className="mt-4 text-balance text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
-            Choose your style.
+            Make the whole app feel like yours.
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-balance text-base text-muted-foreground">
-            Pick a theme and it applies everywhere — hero, navbar, download section, everything.
+          <p className="mx-auto mt-4 max-w-2xl text-balance text-base text-muted-foreground sm:text-lg">
+            Pick a palette once and the interface responds instantly across every screen.
           </p>
         </motion.div>
 
-        <div className="mt-10 grid gap-4 sm:mt-12 lg:grid-cols-[1fr_340px] lg:gap-6">
-          <div className="space-y-3">
+        <div className="mx-auto mt-10 max-w-5xl sm:mt-12">
+          <div className="space-y-4">
             {GROUPS.map((g) => {
               const themes = THEMES.filter((t) => getGroup(t.id) === g.key);
               if (themes.length === 0) return null;
               return (
-                <div key={g.key}>
-                  <p className="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                    {g.label}
-                  </p>
-                  <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-4">
-                    {themes.map((t, idx) => {
+                <div
+                  key={g.key}
+                  ref={(el) => {
+                    const idx = GROUPS.findIndex((group) => group.key === g.key);
+                    cardsRef.current[idx] = el;
+                  }}
+                  className="rounded-2xl bg-card/45 p-3 shadow-sm shadow-black/[0.02] backdrop-blur sm:p-4"
+                >
+                  <div className="mb-3 flex items-end justify-between gap-3">
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-wider text-foreground">
+                        {g.label}
+                      </p>
+                      <p className="mt-1 text-xs text-muted-foreground">{g.hint}</p>
+                    </div>
+                    <span className="rounded-full bg-background/70 px-2 py-1 text-[10px] font-medium text-muted-foreground">
+                      {themes.length}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+                    {themes.map((t) => {
                       const globalIdx = THEMES.findIndex((th) => th.id === t.id);
                       const isActive = t.id === themeId;
                       return (
@@ -118,32 +143,60 @@ export function ThemePreview() {
                           key={t.id}
                           ref={(el) => (swatchesRef.current[globalIdx] = el)}
                           onClick={() => handleThemeChange(t.id)}
-                          className={`group relative flex items-center gap-3 rounded-xl border p-3 transition-all cursor-pointer ${
+                          className={`group relative flex min-h-20 cursor-pointer flex-col items-stretch overflow-hidden rounded-xl p-2.5 text-left transition-all duration-300 ${
                             isActive
-                              ? "border-primary bg-primary/5 shadow-lg shadow-primary/5"
-                              : "border-border bg-card hover:border-muted-foreground/20 hover:bg-accent"
+                              ? "bg-primary/[0.08] shadow-lg shadow-primary/10 ring-1 ring-primary/60"
+                              : "bg-background/60 hover:bg-accent/60"
                           }`}
+                          aria-pressed={isActive}
                         >
-                          <div className="relative shrink-0">
+                          <div className="flex items-center justify-between gap-2">
                             <div
-                              className="size-8 rounded-lg ring-1 ring-black/5 transition-transform duration-200 group-hover:scale-110"
+                              className="flex h-8 flex-1 overflow-hidden rounded-lg ring-1 ring-black/5"
+                              aria-hidden="true"
+                            >
+                              <span
+                                className="flex-[1.4]"
+                                style={{ background: t.tokens.background }}
+                              />
+                              <span
+                                className="flex-1"
+                                style={{ background: t.tokens.card }}
+                              />
+                              <span
+                                className="flex-[0.8]"
+                                style={{ background: t.tokens.primary }}
+                              />
+                            </div>
+                            <span
+                              className={`grid size-6 shrink-0 place-items-center rounded-full transition-all ${
+                                isActive
+                                  ? "bg-primary text-primary-foreground"
+                                  : "bg-card/70 text-transparent group-hover:text-muted-foreground"
+                              }`}
+                            >
+                              {isActive ? (
+                                <IconCheck className="size-3.5 text-white" stroke={2.5} />
+                              ) : (
+                                <span className="size-1.5 rounded-full bg-current" />
+                              )}
+                            </span>
+                          </div>
+                          <div className="mt-2 flex items-center justify-between gap-2">
+                            <span
+                              className={`min-w-0 truncate text-xs ${
+                                isActive
+                                  ? "font-semibold text-foreground"
+                                  : "font-medium text-muted-foreground"
+                              }`}
+                            >
+                              {t.label}
+                            </span>
+                            <span
+                              className="size-3 rounded-full ring-1 ring-black/5"
                               style={{ background: t.tokens.primary }}
                             />
-                            {isActive && (
-                              <span className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/25">
-                                <IconCheck className="size-3.5 text-white" stroke={2.5} />
-                              </span>
-                            )}
                           </div>
-                          <span
-                            className={`truncate text-xs ${
-                              isActive
-                                ? "font-medium text-foreground"
-                                : "text-muted-foreground"
-                            }`}
-                          >
-                            {t.label}
-                          </span>
                         </button>
                       );
                     })}
@@ -152,93 +205,7 @@ export function ThemePreview() {
               );
             })}
           </div>
-
-          <div
-            ref={(el) => (cardsRef.current[0] = el)}
-            className="hidden lg:block"
-          >
-            <div className="sticky top-24 rounded-2xl border border-border bg-card p-5 shadow-xl">
-              <div className="mb-4 flex items-center gap-2">
-                <IconPalette className="size-4 text-muted-foreground" stroke={1.75} />
-                <span className="text-sm font-medium text-foreground">
-                  {activeTheme?.label || "Select a theme"}
-                </span>
-              </div>
-
-              <div className="space-y-3">
-                <div className="flex gap-2">
-                  <div
-                    className="h-16 flex-1 rounded-xl ring-1 ring-black/5"
-                    style={{ background: activeTheme?.tokens.primary }}
-                  />
-                  <div
-                    className="h-16 flex-1 rounded-xl ring-1 ring-black/5"
-                    style={{ background: activeTheme?.tokens.background }}
-                  />
-                  <div
-                    className="h-16 flex-1 rounded-xl ring-1 ring-black/5"
-                    style={{ background: activeTheme?.tokens.card }}
-                  />
-                </div>
-
-                <div className="flex gap-2">
-                  <div
-                    className="h-10 flex-1 rounded-lg ring-1 ring-black/5"
-                    style={{ background: activeTheme?.tokens.muted }}
-                  />
-                  <div
-                    className="h-10 flex-1 rounded-lg ring-1 ring-black/5"
-                    style={{ background: activeTheme?.tokens.secondary }}
-                  />
-                  <div
-                    className="h-10 flex-1 rounded-lg ring-1 ring-black/5"
-                    style={{ background: activeTheme?.tokens.accent }}
-                  />
-                </div>
-
-                <div
-                  className="flex items-center gap-3 rounded-xl border p-3"
-                  style={{
-                    borderColor: activeTheme?.tokens.border,
-                    background: activeTheme?.tokens.background,
-                  }}
-                >
-                  <div
-                    className="size-8 rounded-lg"
-                    style={{ background: activeTheme?.tokens.primary }}
-                  />
-                  <div className="flex-1">
-                    <div
-                      className="h-2.5 w-24 rounded-full"
-                      style={{ background: activeTheme?.tokens.foreground }}
-                    />
-                    <div
-                      className="mt-1.5 h-2 w-16 rounded-full"
-                      style={{ background: activeTheme?.tokens["muted-foreground"] }}
-                    />
-                  </div>
-                  <div
-                    className="rounded-lg px-3 py-1.5 text-[10px] font-medium"
-                    style={{
-                      background: activeTheme?.tokens.primary,
-                      color: activeTheme?.tokens["primary-foreground"],
-                    }}
-                  >
-                    Button
-                  </div>
-                </div>
-
-                <p className="text-center text-[11px] text-muted-foreground">
-                  {THEMES.length} themes available
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
-
-        <p className="mt-6 text-center text-xs text-muted-foreground sm:hidden">
-          Tap any theme — the whole site changes instantly.
-        </p>
       </div>
     </section>
   );

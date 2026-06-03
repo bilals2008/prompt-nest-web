@@ -241,23 +241,23 @@ const ShowcaseBlock = forwardRef(({ item, index }, blockRef) => {
           <div
             data-glow
             aria-hidden="true"
-            className="pointer-events-none absolute -inset-4 -z-10 rounded-3xl opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
-            style={{ background: `${color}12` }}
+            className="pointer-events-none absolute -inset-4 -z-10 rounded-3xl opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-60"
+            style={{ background: `${color}15` }}
           />
 
           <div
             className="absolute -inset-px rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
             style={{
-              background: `linear-gradient(135deg, ${color}25, transparent 50%, ${color}12)`,
+              background: `linear-gradient(135deg, ${color}30, transparent 40%, transparent 60%, ${color}15)`,
             }}
           />
 
           <div className="relative overflow-hidden rounded-2xl border border-border bg-card shadow-xl transition-all duration-500 group-hover:border-transparent group-hover:shadow-2xl">
             <div className="flex items-center gap-1.5 border-b border-border bg-muted/40 px-4 py-2.5">
-              <span className="size-2.5 rounded-full bg-destructive/70" />
-              <span className="size-2.5 rounded-full bg-warning/70" />
-              <span className="size-2.5 rounded-full" style={{ background: `${color}70` }} />
-              <div className="ml-3 flex-1 text-center text-[11px] font-medium text-muted-foreground">
+              <span className="size-2.5 rounded-full bg-[#ff5f57]" />
+              <span className="size-2.5 rounded-full bg-[#febc2e]" />
+              <span className="size-2.5 rounded-full bg-[#28c840]" />
+              <div className="ml-4 flex-1 text-center text-[11px] font-medium text-muted-foreground">
                 Prompt Nest
               </div>
             </div>
@@ -274,8 +274,8 @@ const ShowcaseBlock = forwardRef(({ item, index }, blockRef) => {
 
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -bottom-6 left-[10%] right-[10%] -z-10 h-8 rounded-[50%] blur-xl transition-all duration-500 group-hover:scale-110 group-hover:opacity-80"
-            style={{ background: `${color}20` }}
+            className="pointer-events-none absolute -bottom-5 left-[15%] right-[15%] -z-10 h-8 rounded-[50%] blur-xl transition-all duration-500 group-hover:scale-110 group-hover:opacity-80"
+            style={{ background: `${color}18` }}
           />
         </div>
       </div>
