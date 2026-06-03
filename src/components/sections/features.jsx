@@ -1,3 +1,4 @@
+// File: src/components/sections/features.jsx
 import { forwardRef, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
