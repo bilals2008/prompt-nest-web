@@ -3,6 +3,23 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
+  "description": "Marketing website for Prompt Nest — a calm, native desktop app to organize, search, and reuse your AI prompts.",
+  "author": "Muhammad Bilal Hassan",
+  "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Muhammad-Bilal-Hassan/prompt-nest-web"
+  },
+  "keywords": [
+    "prompt-nest",
+    "ai-prompts",
+    "prompt-manager",
+    "desktop-app",
+    "electron",
+    "react",
+    "vite",
+    "tailwindcss"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
