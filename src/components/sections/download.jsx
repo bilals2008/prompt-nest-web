@@ -119,38 +119,7 @@ export function Download({ release }) {
           </div>
         </motion.div>
 
-        {assets.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: 0.2 }}
-            className="mt-6"
-          >
-            <details className="group rounded-xl border border-border bg-card">
-              <summary className="flex cursor-pointer items-center justify-between px-5 py-3 text-sm text-muted-foreground transition-colors hover:text-foreground">
-                <span>All assets in this release ({assets.length})</span>
-                <span className="text-xs group-open:rotate-180 transition-transform">
-                  ▾
-                </span>
-              </summary>
-              <div className="border-t border-border">
-                {assets.map((a) => (
-                  <a
-                    key={a.url}
-                    href={a.url}
-                    className="flex items-center justify-between border-b border-border px-5 py-2.5 text-xs last:border-b-0 transition-colors hover:bg-accent cursor-pointer"
-                  >
-                    <span className="font-mono text-foreground">{a.name}</span>
-                    <span className="text-muted-foreground">
-                      {formatBytes(a.size)}
-                    </span>
-                  </a>
-                ))}
-              </div>
-            </details>
-          </motion.div>
-        )}
+
       </div>
     </section>
   );
