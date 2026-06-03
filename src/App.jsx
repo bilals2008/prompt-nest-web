@@ -8,6 +8,7 @@ import { Features } from "@/components/sections/features";
 import { Showcase } from "@/components/sections/showcase";
 import { Download } from "@/components/sections/download";
 import { ThemePreview } from "@/components/sections/theme-preview";
+import { QuickPrompt } from "@/components/sections/quickprompt";
 import { Footer } from "@/components/sections/footer";
 import { ChangelogPage } from "@/components/pages/changelog-page";
 
@@ -25,6 +26,7 @@ function HomePage() {
           <Showcase />
           <Download release={release} />
           <ThemePreview />
+          <QuickPrompt />
         </main>
         <Footer />
       </div>

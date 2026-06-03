@@ -96,7 +96,7 @@ export function Navbar({ version }) {
           <div className="relative">
             <div className="absolute -inset-1.5 rounded-2xl bg-primary/0 opacity-0 blur-md transition-all duration-300 group-hover:bg-primary/15 group-hover:opacity-100" />
             <img
-              src="/logo.png"
+              src="/logo.avif"
               alt="Prompt Nest"
               className="relative size-8 rounded-xl object-cover shadow-[0_0_0_1px_var(--color-border)]"
             />

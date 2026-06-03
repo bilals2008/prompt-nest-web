@@ -24,7 +24,7 @@ export function Footer() {
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-5 py-8 sm:flex-row">
           <div className="flex flex-wrap items-center justify-center gap-2 text-sm text-muted-foreground sm:justify-start">
             <img
-              src="/logo.png"
+              src="/logo.avif"
               alt="Prompt Nest"
               className="size-5 rounded object-cover"
             />
