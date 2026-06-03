@@ -7,9 +7,14 @@ import {
   IconDownload,
   IconBrandGithub,
   IconExternalLink,
-  IconClock,
+  IconBell,
+  IconRefresh,
+  IconShieldCheck,
+  IconBolt,
+  IconLock,
 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { WindowsLogo } from "@/components/icons/windows-logo";
 import { AppleLogo } from "@/components/icons/apple-logo";
 import { LinuxLogo } from "@/components/icons/linux-logo";
@@ -26,15 +31,50 @@ function formatDate(iso) {
 }
 
 const PLATFORMS = [
-  { id: "windows", name: "Windows", meta: "Windows 10+ · 64-bit", icon: WindowsLogo, comingSoon: false },
-  { id: "mac", name: "macOS", meta: "macOS 11+ · Universal", icon: AppleLogo, comingSoon: true },
-  { id: "linux", name: "Linux", meta: "All major distros", icon: LinuxLogo, comingSoon: true },
+  {
+    id: "windows",
+    name: "Windows",
+    meta: "Windows 10+ · 64-bit",
+    icon: WindowsLogo,
+    comingSoon: false,
+    glowColor: "#3b82f6",
+    badgeLabel: "Stable & Optimized",
+    badgeVariant: "default",
+  },
+  {
+    id: "mac",
+    name: "macOS",
+    meta: "macOS 11+ · Universal",
+    icon: AppleLogo,
+    comingSoon: true,
+    glowColor: "#a855f7",
+    badgeLabel: "Coming soon",
+    badgeVariant: "muted",
+  },
+  {
+    id: "linux",
+    name: "Linux",
+    meta: "All major distros",
+    icon: LinuxLogo,
+    comingSoon: true,
+    glowColor: "#f97316",
+    badgeLabel: "Coming soon",
+    badgeVariant: "muted",
+  },
+];
+
+const FEATURES = [
+  { icon: IconRefresh, label: "Auto Updates", sub: "Always up to date", color: "#22d3ee" },
+  { icon: IconShieldCheck, label: "Safe & Secure", sub: "Verified & trusted", color: "#34d399" },
+  { icon: IconBolt, label: "Lightweight", sub: "Fast & efficient", color: "#facc15" },
+  { icon: IconLock, label: "Your Data, Yours", sub: "100% Local & Private", color: "#c084fc" },
 ];
 
 export function Download({ release }) {
   const sectionRef = useRef(null);
   const cardsRef = useRef([]);
   const metaRef = useRef(null);
+  const featuresRef = useRef(null);
 
   useGSAP(() => {
     gsap.fromTo(
@@ -71,37 +111,50 @@ export function Download({ release }) {
       }
     );
 
+    if (featuresRef.current) {
+      gsap.fromTo(
+        featuresRef.current,
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: featuresRef.current,
+            start: "top 92%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+    }
+
     cardsRef.current.forEach((card) => {
       if (!card) return;
       card.addEventListener("mouseenter", () => {
         gsap.to(card, {
           y: -6,
-          boxShadow: "0 0 40px var(--color-primary)/0.15",
           duration: 0.4,
           ease: "power2.out",
           overwrite: "auto",
-        });
-        gsap.to(card.querySelector("[data-icon-wrap]"), {
-          scale: 1.08,
-          borderColor: "var(--color-primary)/0.3",
-          duration: 0.4,
-          ease: "power2.out",
         });
       });
       card.addEventListener("mouseleave", () => {
         gsap.to(card, {
           y: 0,
-          boxShadow: "none",
           duration: 0.5,
           ease: "power2.out",
           overwrite: "auto",
         });
-        gsap.to(card.querySelector("[data-icon-wrap]"), {
-          scale: 1,
-          borderColor: "var(--color-border)",
-          duration: 0.5,
-          ease: "power2.out",
-        });
+        card.style.setProperty("--mouse-x", "50%");
+        card.style.setProperty("--mouse-y", "50%");
+      });
+      card.addEventListener("mousemove", (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        card.style.setProperty("--mouse-x", `${x}%`);
+        card.style.setProperty("--mouse-y", `${y}%`);
       });
     });
   }, { scope: sectionRef });
@@ -145,9 +198,45 @@ export function Download({ release }) {
               Icon={p.icon}
               asset={assets[p.id]}
               comingSoon={p.comingSoon}
+              glowColor={p.glowColor}
+              badgeLabel={p.badgeLabel}
+              badgeVariant={p.badgeVariant}
               disabled={loading && !assets[p.id]}
               ref={(el) => (cardsRef.current[i] = el)}
             />
+          ))}
+        </div>
+
+        <div
+          ref={featuresRef}
+          className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-5"
+        >
+          {FEATURES.map((f) => (
+            <div
+              key={f.label}
+              className="group/item relative rounded-xl border border-border bg-card p-5 transition-all duration-300 hover:border-transparent hover:bg-card/80"
+            >
+              <div
+                className="pointer-events-none absolute inset-0 rounded-xl opacity-0 transition-opacity duration-500 group-hover/item:opacity-100"
+                style={{
+                  background: `radial-gradient(300px circle at 50% 0%, ${f.color}10, transparent 60%)`,
+                }}
+              />
+              <div className="relative">
+                <div
+                  className="mb-3 inline-flex size-10 items-center justify-center rounded-lg transition-transform duration-300 group-hover/item:scale-110"
+                  style={{ background: `${f.color}15` }}
+                >
+                  <f.icon
+                    className="size-5"
+                    style={{ color: f.color }}
+                    stroke={1.75}
+                  />
+                </div>
+                <p className="text-sm font-semibold text-foreground">{f.label}</p>
+                <p className="mt-0.5 text-xs text-muted-foreground">{f.sub}</p>
+              </div>
+            </div>
           ))}
         </div>
 
@@ -185,33 +274,116 @@ export function Download({ release }) {
   );
 }
 
-const PlatformCard = ({ name, meta, Icon, asset, comingSoon, disabled }) => {
+const PlatformCard = ({
+  name,
+  meta,
+  Icon,
+  asset,
+  comingSoon,
+  glowColor,
+  badgeLabel,
+  badgeVariant,
+  disabled,
+}) => {
   return (
-    <div className="group relative rounded-xl border border-border bg-card p-8 transition-colors duration-300 will-change-transform">
-      <div className="flex flex-col items-center text-center">
+    <div
+      className="group relative rounded-2xl border border-border bg-card p-8 transition-all duration-300 will-change-transform hover:border-transparent"
+      style={{
+        "--glow": glowColor,
+      }}
+    >
+      <div
+        className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{
+          background: `radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), ${glowColor}12, transparent 40%)`,
+        }}
+      />
+      <div
+        className="absolute -inset-px rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{
+          background: `linear-gradient(135deg, ${glowColor}30, transparent 50%, ${glowColor}15)`,
+        }}
+      />
+
+      {comingSoon && (
+        <div className="absolute top-4 left-4">
+          <span
+            className="inline-block rounded-md px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white"
+            style={{ background: glowColor }}
+          >
+            Soon
+          </span>
+        </div>
+      )}
+
+      <div className="relative flex flex-col items-center text-center">
         <div
           data-icon-wrap
-          className="grid size-16 place-items-center rounded-2xl border border-border bg-muted transition-colors duration-300"
+          className="relative grid size-20 place-items-center rounded-full transition-transform duration-300"
         >
-          <Icon />
+          <div
+            className="absolute inset-0 rounded-full opacity-20 blur-xl transition-opacity duration-500 group-hover:opacity-40"
+            style={{ background: glowColor }}
+          />
+          <div
+            className="absolute inset-0 rounded-full border transition-all duration-500"
+            style={{ borderColor: `${glowColor}25` }}
+          />
+          <div
+            className="absolute -inset-2 rounded-full border border-dashed transition-all duration-500 group-hover:rotate-90"
+            style={{ borderColor: `${glowColor}18` }}
+          />
+          <Icon className="relative z-10 size-10" />
         </div>
-        <h3 className="mt-5 text-lg font-semibold text-foreground">{name}</h3>
-        <p className="mt-1 text-sm text-muted-foreground">{meta}</p>
-        <Button
-          asChild
-          size="lg"
-          className="mt-6 w-full"
-          disabled={disabled || comingSoon}
+
+        <h3 className="mt-6 text-xl font-semibold text-foreground">{name}</h3>
+        <p className="mt-1.5 text-sm text-muted-foreground">{meta}</p>
+
+        <Badge
+          variant={badgeVariant}
+          className="mt-4"
         >
-          <a href={asset || "#"} aria-disabled={!asset || comingSoon}>
-            {comingSoon ? (
-              <IconClock className="size-4" stroke={1.75} />
-            ) : (
+          {!comingSoon && (
+            <span
+              className="mr-1 inline-block size-1.5 rounded-full"
+              style={{ background: "#22c55e" }}
+            />
+          )}
+          {comingSoon && (
+            <IconBell className="size-3" stroke={1.75} />
+          )}
+          {badgeLabel}
+        </Badge>
+
+        {comingSoon ? (
+          <Button
+            variant="outline"
+            size="lg"
+            className="mt-6 w-full"
+            disabled={disabled}
+          >
+            <IconBell className="size-4" stroke={1.75} />
+            Notify me
+          </Button>
+        ) : (
+          <Button
+            asChild
+            size="lg"
+            className="mt-6 w-full"
+            disabled={disabled}
+          >
+            <a href={asset || "#"} aria-disabled={!asset}>
               <IconDownload className="size-4" stroke={1.75} />
-            )}
-            {comingSoon ? "Coming soon" : asset ? `Download for ${name}` : "Not available yet"}
-          </a>
-        </Button>
+              {asset ? `Download for ${name}` : "Not available yet"}
+            </a>
+          </Button>
+        )}
+
+        {comingSoon ? null : (
+          <p className="mt-3 text-xs text-muted-foreground">
+            Secure · Fast · Auto-updates
+          </p>
+        )}
       </div>
     </div>
   );
