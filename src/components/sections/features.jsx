@@ -189,7 +189,7 @@ const BentoCard = forwardRef(({ feature }, cardRef) => {
             <Icon className="size-5 sm:size-6" style={{ color }} stroke={1.5} />
           </div>
 
-          <h3 className="text-base font-semibold tracking-tight text-foreground sm:text-lg">
+          <h3 className="text-base font-serif italic tracking-tight text-foreground sm:text-lg">
             {title}
           </h3>
           <p className="mt-1.5 flex-1 text-xs leading-relaxed text-muted-foreground sm:mt-2 sm:text-sm">

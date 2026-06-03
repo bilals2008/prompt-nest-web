@@ -214,7 +214,7 @@ const ShowcaseBlock = forwardRef(({ item, index }, blockRef) => {
           </span>
         </div>
 
-        <h3 className="text-balance text-2xl font-semibold tracking-tight sm:text-3xl">{title}</h3>
+        <h3 className="text-balance text-2xl font-serif italic tracking-tight sm:text-3xl">{title}</h3>
         <p className="mt-4 text-pretty text-base leading-relaxed text-muted-foreground">{body}</p>
 
         <ul className="mt-6 space-y-3">
