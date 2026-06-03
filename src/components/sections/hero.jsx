@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { IconDownload, IconArrowRight } from "@tabler/icons-react";
+import { IconDownload, IconArrowRight, IconBrandWindows, IconBrandApple } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
@@ -24,7 +24,7 @@ export function Hero({ version }) {
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[600px] w-[800px] -translate-x-1/2 bg-hero-glow opacity-40"
+        className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[700px] w-[900px] -translate-x-1/2 bg-hero-glow opacity-40"
       />
       <div className="mx-auto max-w-6xl px-5 pt-20 pb-16 sm:pt-28 sm:pb-24">
         <div className="flex flex-col items-center text-center">
@@ -46,11 +46,11 @@ export function Hero({ version }) {
             animate="show"
             variants={fadeUp}
             custom={1}
-            className="mt-8 max-w-4xl text-balance text-5xl font-semibold tracking-tight text-foreground sm:text-6xl md:text-7xl lg:text-8xl"
+            className="mt-8 max-w-5xl text-balance text-5xl font-semibold tracking-tight text-foreground sm:text-6xl md:text-7xl lg:text-8xl"
           >
             All your AI prompts,
             <br className="hidden sm:block" />
-            <span className="text-muted-foreground"> neatly nested.</span>
+            <span className="text-primary"> neatly nested.</span>
           </motion.h1>
 
           <motion.p
@@ -77,51 +77,66 @@ export function Hero({ version }) {
                 Download for Free
               </a>
             </Button>
+            <Button asChild size="lg" variant="outline">
+              <a href="#features">
+                Learn more
+              </a>
+            </Button>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            animate="show"
+            variants={fadeUp}
+            custom={4}
+            className="mt-6 flex items-center justify-center gap-5 text-xs text-muted-foreground"
+          >
+            <span className="flex items-center gap-1.5">
+              <IconBrandWindows className="size-3.5" stroke={1.75} />
+              Windows
+            </span>
+            <span className="flex items-center gap-1.5">
+              <IconBrandApple className="size-3.5" stroke={1.75} />
+              macOS
+            </span>
+            <span className="flex items-center gap-1.5">
+              <svg className="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 8V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2" />
+                <path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
+                <path d="M2 12h20" />
+                <circle cx="8" cy="12" r="1" />
+                <circle cx="16" cy="12" r="1" />
+              </svg>
+              Linux
+            </span>
           </motion.div>
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
-          className="mx-auto mt-20 max-w-6xl"
+          className="mx-auto mt-20 max-w-5xl"
         >
-          <AppPreview />
+          <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-2xl">
+            <div className="flex items-center gap-1.5 border-b border-border bg-muted/50 px-4 py-3">
+              <span className="size-3 rounded-full bg-destructive" />
+              <span className="size-3 rounded-full bg-warning" />
+              <span className="size-3 rounded-full bg-primary" />
+              <div className="ml-3 flex-1 text-center text-xs font-medium text-muted-foreground">
+                Prompt Nest — App Preview
+              </div>
+            </div>
+            <div className="flex aspect-video items-center justify-center bg-muted/20">
+              <img
+                src="https://placehold.co/1200x675/12121a/7d7d9e?text=App+Screenshot"
+                alt="Prompt Nest app preview"
+                className="block size-full object-cover"
+              />
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
-  );
-}
-
-function AppPreview() {
-  return (
-    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {[1, 2, 3].map((num) => (
-        <motion.div
-          key={num}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 + num * 0.1 }}
-          className="overflow-hidden rounded-2xl border border-border bg-card"
-        >
-          <div className="flex items-center gap-1.5 border-b border-border bg-muted/50 px-4 py-3">
-            <span className="size-2.5 rounded-full bg-muted-foreground/20" />
-            <span className="size-2.5 rounded-full bg-muted-foreground/20" />
-            <span className="size-2.5 rounded-full bg-muted-foreground/20" />
-            <div className="ml-3 flex-1 text-center text-[11px] font-medium text-muted-foreground">
-              Prompt Nest
-            </div>
-          </div>
-          <div className="aspect-video bg-muted/30">
-            <img
-              src={`https://placehold.co/800x500/12121a/ededee?text=Feature+${num}`}
-              alt={`Prompt Nest feature ${num}`}
-              loading="lazy"
-              className="block size-full object-cover"
-            />
-          </div>
-        </motion.div>
-      ))}
-    </div>
   );
 }
