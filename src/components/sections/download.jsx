@@ -40,11 +40,11 @@ export function Download({ release }) {
   return (
     <section
       id="download"
-      className="relative overflow-hidden border-b border-[#181830] bg-[#06060c] py-20 sm:py-28"
+      className="relative overflow-hidden border-b border-border bg-background py-20 sm:py-28"
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-gradient-to-r from-transparent via-[#00f0ff]/40 to-transparent"
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent"
       />
       <div className="mx-auto max-w-6xl px-5">
         <motion.div
@@ -54,13 +54,13 @@ export function Download({ release }) {
           transition={{ duration: 0.4 }}
           className="max-w-2xl"
         >
-          <p className="text-xs font-medium uppercase tracking-wider text-[#00f0ff]">
+          <p className="text-xs font-medium uppercase tracking-wider text-primary">
             Download
           </p>
-          <h2 className="mt-3 text-balance text-3xl font-medium tracking-tight text-[#e2e2f5] sm:text-4xl">
+          <h2 className="mt-3 text-balance text-3xl font-medium tracking-tight text-foreground sm:text-4xl">
             Get Prompt Nest on your machine.
           </h2>
-          <p className="mt-4 text-pretty text-base text-[#7d7d9e]">
+          <p className="mt-4 text-pretty text-base text-muted-foreground">
             Pick your platform. Auto-updates keep you on the latest version
             without re-installing.
           </p>
@@ -71,15 +71,15 @@ export function Download({ release }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-12 overflow-hidden rounded-xl border border-[#181830] bg-[#0c0c16]"
+          className="mt-12 overflow-hidden rounded-xl border border-border bg-card"
         >
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#181830] px-6 py-4">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-6 py-4">
             <div className="flex items-center gap-3">
-              <Badge variant="muted" className="font-mono border-[#00f0ff]/20 bg-[#00f0ff]/10 text-[#00f0ff]">
+              <Badge variant="muted" className="gap-1.5 font-mono">
                 <IconPackage className="size-3" stroke={1.75} />
                 v{version}
               </Badge>
-              <span className="text-sm text-[#7d7d9e]">
+              <span className="text-sm text-muted-foreground">
                 {loading
                   ? "Checking for the latest release…"
                   : error
@@ -87,7 +87,7 @@ export function Download({ release }) {
                     : `Released ${formatDate(publishedAt)}`}
               </span>
             </div>
-            <Button asChild variant="ghost" size="sm" className="text-[#7d7d9e] hover:text-[#e2e2f5] hover:bg-[#101020]">
+            <Button asChild variant="ghost" size="sm">
               <a
                 href={releaseUrl}
                 target="_blank"
@@ -101,7 +101,7 @@ export function Download({ release }) {
             </Button>
           </div>
 
-          <div className="grid divide-y divide-[#181830] sm:grid-cols-2 sm:divide-x sm:divide-y-0">
+          <div className="grid divide-y divide-border sm:grid-cols-2 sm:divide-x sm:divide-y-0">
             <PlatformCard
               icon={IconBrandWindows}
               name="Windows"
@@ -127,22 +127,22 @@ export function Download({ release }) {
             transition={{ duration: 0.4, delay: 0.2 }}
             className="mt-6"
           >
-            <details className="group rounded-xl border border-[#181830] bg-[#0c0c16]">
-              <summary className="flex cursor-pointer items-center justify-between px-5 py-3 text-sm text-[#7d7d9e] transition-colors hover:text-[#e2e2f5]">
+            <details className="group rounded-xl border border-border bg-card">
+              <summary className="flex cursor-pointer items-center justify-between px-5 py-3 text-sm text-muted-foreground transition-colors hover:text-foreground">
                 <span>All assets in this release ({assets.length})</span>
                 <span className="text-xs group-open:rotate-180 transition-transform">
                   ▾
                 </span>
               </summary>
-              <div className="border-t border-[#181830]">
+              <div className="border-t border-border">
                 {assets.map((a) => (
                   <a
                     key={a.url}
                     href={a.url}
-                    className="flex items-center justify-between border-b border-[#181830] px-5 py-2.5 text-xs last:border-b-0 transition-colors hover:bg-[#101020] cursor-pointer"
+                    className="flex items-center justify-between border-b border-border px-5 py-2.5 text-xs last:border-b-0 transition-colors hover:bg-accent cursor-pointer"
                   >
-                    <span className="font-mono text-[#e2e2f5]">{a.name}</span>
-                    <span className="text-[#7d7d9e]">
+                    <span className="font-mono text-foreground">{a.name}</span>
+                    <span className="text-muted-foreground">
                       {formatBytes(a.size)}
                     </span>
                   </a>
@@ -160,22 +160,18 @@ function PlatformCard({ icon: Icon, name, meta, asset, disabled }) {
   return (
     <div className="flex flex-col gap-4 p-6">
       <div className="flex items-center gap-3">
-        <div className="grid size-10 place-items-center rounded-lg border border-[#181830] bg-[#101020]">
-          <Icon className="size-5 text-[#00f0ff]" stroke={1.75} />
+        <div className="grid size-10 place-items-center rounded-lg border border-border bg-muted">
+          <Icon className="size-5 text-primary" stroke={1.75} />
         </div>
         <div>
-          <div className="text-sm font-medium text-[#e2e2f5]">{name}</div>
-          <div className="text-xs text-[#7d7d9e]">{meta}</div>
+          <div className="text-sm font-medium text-foreground">{name}</div>
+          <div className="text-xs text-muted-foreground">{meta}</div>
         </div>
       </div>
       <Button
         asChild
         size="lg"
-        className={`w-full border-0 font-medium ${
-          asset
-            ? "bg-gradient-to-r from-[#00f0ff] to-[#ff2a9d] text-[#06060c] shadow-[0_0_20px_rgba(0,240,255,0.2)] hover:opacity-90"
-            : "bg-[#101020] text-[#7d7d9e] cursor-not-allowed"
-        }`}
+        className="w-full"
         disabled={disabled}
       >
         <a href={asset || "#"} aria-disabled={!asset}>

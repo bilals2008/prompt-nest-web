@@ -55,6 +55,9 @@
   --backdrop: oklch(0.96 0.04 270 / 0.5);
   --surface: #f4f5f8;
   --surface-foreground: #64748b;
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: #ffffff;
+  --warning: #eab308;
 }
 
 [data-theme="dark"] {
@@ -78,6 +81,9 @@
   --backdrop: oklch(0.45 0.12 270 / 0.18);
   --surface: #1a1a25;
   --surface-foreground: #8892a8;
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: #ffffff;
+  --warning: #eab308;
 }
 
 @layer base {
@@ -127,5 +133,10 @@ html *::after {
       var(--color-backdrop) 0%,
       transparent 70%
     );
+  }
+  .bg-grid-pattern {
+    background-image: linear-gradient(var(--color-border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
+    background-size: 56px 56px;
   }
 }

@@ -5,6 +5,7 @@ import { Navbar } from "@/components/sections/navbar";
 import { Hero } from "@/components/sections/hero";
 import { Features } from "@/components/sections/features";
 import { Download } from "@/components/sections/download";
+import { ThemePreview } from "@/components/sections/theme-preview";
 import { Footer } from "@/components/sections/footer";
 import { ChangelogPage } from "@/components/pages/changelog-page";
 
@@ -19,6 +20,7 @@ function HomePage() {
           <Hero version={release.version} />
           <Features />
           <Download release={release} />
+          <ThemePreview />
         </main>
         <Footer />
       </div>

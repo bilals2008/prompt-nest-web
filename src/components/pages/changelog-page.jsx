@@ -13,9 +13,9 @@ const fadeUp = {
 };
 
 const typeStyles = {
-  alpha: "bg-[#a78bfa]/10 text-[#a78bfa] border-[#a78bfa]/20",
-  beta: "bg-[#00f0ff]/10 text-[#00f0ff] border-[#00f0ff]/20",
-  stable: "bg-[#00ff9c]/10 text-[#00ff9c] border-[#00ff9c]/20",
+  alpha: "bg-destructive/10 text-destructive border-destructive/20",
+  beta: "bg-primary/10 text-primary border-primary/20",
+  stable: "bg-primary/10 text-primary border-primary/20",
 };
 
 function VersionBadge({ type }) {
@@ -28,7 +28,7 @@ function VersionBadge({ type }) {
 
 export function ChangelogPage() {
   return (
-    <div className="min-h-screen bg-[#06060c]">
+    <div className="min-h-screen bg-background">
       <div className="mx-auto max-w-4xl px-5 pt-20 pb-24 sm:pt-28 sm:pb-32">
         <motion.div
           initial="hidden"
@@ -36,7 +36,7 @@ export function ChangelogPage() {
           variants={fadeUp}
           custom={0}
         >
-          <Button asChild variant="ghost" size="sm" className="mb-6 text-[#7d7d9e] hover:text-[#e2e2f5]">
+          <Button asChild variant="ghost" size="sm" className="mb-6">
             <a href="/">
               <IconArrowLeft className="size-4" stroke={1.75} />
               Back to home
@@ -51,14 +51,14 @@ export function ChangelogPage() {
           custom={1}
           className="flex items-center gap-3"
         >
-          <div className="grid size-10 place-items-center rounded-xl bg-[#00f0ff]/10 text-[#00f0ff]">
+          <div className="grid size-10 place-items-center rounded-xl bg-primary/10 text-primary">
             <IconHistory className="size-5" stroke={1.75} />
           </div>
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight text-[#e2e2f5] sm:text-3xl">
+            <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
               Changelog
             </h1>
-            <p className="text-sm text-[#7d7d9e]">
+            <p className="text-sm text-muted-foreground">
               Every release, every improvement — tracked.
             </p>
           </div>
@@ -74,34 +74,34 @@ export function ChangelogPage() {
                 animate="show"
                 variants={fadeUp}
                 custom={2 + idx}
-                className="group rounded-xl border border-[#181830] bg-[#0c0c16] p-5 transition-colors hover:border-[#00f0ff]/20 sm:p-6"
+                className="group rounded-xl border border-border bg-card p-5 transition-colors hover:border-primary/20 sm:p-6"
               >
                 <div className="mb-3 flex items-start gap-3">
-                  <div className={`flex size-8 shrink-0 items-center justify-center rounded-lg ${isLatest ? 'bg-gradient-to-br from-[#00f0ff] to-[#ff2a9d] text-[#06060c]' : 'bg-[#00f0ff]/10 text-[#00f0ff]'}`}>
+                  <div className={`flex size-8 shrink-0 items-center justify-center rounded-lg ${isLatest ? 'bg-primary text-primary-foreground' : 'bg-primary/10 text-primary'}`}>
                     <IconStar className={`size-4 ${isLatest ? 'fill-current' : ''}`} stroke={1.75} />
                   </div>
                   <div className="flex-1">
                     <div className="flex flex-wrap items-center gap-2">
-                      <h3 className="text-base font-semibold text-[#e2e2f5]">
+                      <h3 className="text-base font-semibold text-foreground">
                         v{release.version}
                       </h3>
                       <VersionBadge type={release.type} />
                       {isLatest && (
-                        <span className="rounded-md border border-[#ff2a9d]/20 bg-[#ff2a9d]/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[#ff2a9d]">
+                        <span className="rounded-md border border-border bg-muted px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                           Latest
                         </span>
                       )}
                     </div>
-                    <p className="mt-0.5 text-xs text-[#7d7d9e]">{release.date}</p>
+                    <p className="mt-0.5 text-xs text-muted-foreground">{release.date}</p>
                   </div>
                 </div>
                 <div className="ml-11 space-y-1">
                   {release.changes.map((change, i) => (
                     <div
                       key={i}
-                      className="flex items-start gap-2 rounded-lg px-2 py-1 text-sm text-[#7d7d9e] transition-colors hover:bg-[#101020]"
+                      className="flex items-start gap-2 rounded-lg px-2 py-1 text-sm text-muted-foreground transition-colors hover:bg-accent"
                     >
-                      <div className="mt-0.5 flex size-3.5 shrink-0 items-center justify-center rounded-full bg-[#00f0ff]/10 text-[#00f0ff]">
+                      <div className="mt-0.5 flex size-3.5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
                         <IconListCheck className="size-2.5" stroke={1.75} />
                       </div>
                       <span>{change}</span>

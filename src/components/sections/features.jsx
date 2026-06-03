@@ -69,7 +69,7 @@ export function Features() {
   return (
     <section
       id="features"
-      className="relative overflow-hidden border-b border-border bg-[#0a0a0f] py-24 sm:py-32"
+      className="relative overflow-hidden border-b border-border bg-background py-24 sm:py-32"
     >
       <div className="mx-auto max-w-6xl px-5">
         <motion.div
@@ -134,11 +134,12 @@ function CardStack({ images }) {
       whileInView="show"
       viewport={{ once: true, margin: "-100px" }}
       variants={containerVariants}
-      className={`relative mx-auto h-[280px] w-full max-w-sm`}
+      className="relative mx-auto h-[280px] w-full max-w-sm"
     >
       <div className="absolute inset-0 flex items-center justify-center">
-        <div className="absolute h-64 w-80 rounded-3xl opacity-20 blur-3xl"
-          style={{ background: "radial-gradient(ellipse at center, rgba(99, 102, 241, 0.35) 0%, transparent 70%)" }}
+        <div
+          aria-hidden="true"
+          className="absolute h-64 w-80 rounded-3xl bg-backdrop opacity-60 blur-3xl"
         />
       </div>
       {STACK_CARDS.map((card, i) => (
@@ -146,18 +147,18 @@ function CardStack({ images }) {
           key={i}
           custom={card}
           variants={cardVariants}
-          className="absolute left-1/2 top-1/2 w-[85%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-xl border border-white/10 bg-white/5 shadow-xl"
+          className="absolute left-1/2 top-1/2 w-[85%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-xl border border-border bg-card shadow-xl"
           style={{ zIndex: card.z }}
         >
-          <div className="flex items-center gap-1.5 border-b border-white/10 bg-white/5 px-3 py-2">
-            <span className="size-2 rounded-full bg-white/20" />
-            <span className="size-2 rounded-full bg-white/20" />
-            <span className="size-2 rounded-full bg-white/20" />
+          <div className="flex items-center gap-1.5 border-b border-border bg-muted/50 px-3 py-2">
+            <span className="size-2 rounded-full bg-muted-foreground/20" />
+            <span className="size-2 rounded-full bg-muted-foreground/20" />
+            <span className="size-2 rounded-full bg-muted-foreground/20" />
             <div className="ml-3 flex-1 text-center text-[10px] font-medium text-muted-foreground">
               Prompt Nest
             </div>
           </div>
-          <div className="aspect-video bg-white/5">
+          <div className="aspect-video bg-muted/30">
             <img
               src={`https://placehold.co/800x500/12121a/ededee?text=${images[i]}`}
               alt=""

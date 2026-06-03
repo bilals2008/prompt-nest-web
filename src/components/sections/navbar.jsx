@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 const LINKS = [
   { label: "Features", href: "#features" },
   { label: "Showcase", href: "#showcase" },
+  { label: "Themes", href: "#themes" },
   { label: "Download", href: "#download" },
   { label: "Changelog", href: "/changelog", external: true },
 ];
@@ -26,7 +27,7 @@ export function Navbar({ version }) {
     <header
       className={`sticky top-0 z-50 w-full border-b transition-colors ${
         scrolled
-          ? "border-[#181830] bg-[#06060c]/85 backdrop-blur-md"
+          ? "border-border bg-background/85 backdrop-blur-md"
           : "border-transparent bg-transparent"
       }`}
     >
@@ -37,11 +38,11 @@ export function Navbar({ version }) {
           aria-label="Prompt Nest home"
         >
           <img src="/logo.png" alt="Prompt Nest" className="size-7 rounded-lg object-cover" />
-          <span className="text-sm font-medium tracking-tight text-[#e2e2f5]">
+          <span className="text-sm font-medium tracking-tight text-foreground">
             Prompt Nest
           </span>
           {version && (
-            <span className="hidden sm:inline-flex items-center rounded-md border border-[#181830] bg-[#101020] px-1.5 py-0.5 text-[10px] font-medium text-[#7d7d9e]">
+            <span className="hidden sm:inline-flex items-center rounded-md border border-border bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">
               v{version}
             </span>
           )}
@@ -53,7 +54,7 @@ export function Navbar({ version }) {
               <Link
                 key={l.href}
                 to={l.href}
-                className="rounded-md px-3 py-1.5 text-sm text-[#7d7d9e] transition-colors hover:bg-[#101020] hover:text-[#e2e2f5] cursor-pointer"
+                className="rounded-md px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground cursor-pointer"
               >
                 {l.label}
               </Link>
@@ -61,7 +62,7 @@ export function Navbar({ version }) {
               <a
                 key={l.href}
                 href={l.href}
-                className="rounded-md px-3 py-1.5 text-sm text-[#7d7d9e] transition-colors hover:bg-[#101020] hover:text-[#e2e2f5] cursor-pointer"
+                className="rounded-md px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground cursor-pointer"
               >
                 {l.label}
               </a>
@@ -70,7 +71,7 @@ export function Navbar({ version }) {
         </div>
 
         <div className="flex items-center gap-2">
-          <Button asChild size="sm" className="hidden sm:inline-flex border-0 bg-gradient-to-r from-[#00f0ff] to-[#ff2a9d] text-[#06060c] font-medium hover:opacity-90">
+          <Button asChild size="sm" className="hidden sm:inline-flex">
             <a href="#download">
               <IconDownload className="size-4" stroke={1.75} />
               Download
@@ -79,7 +80,7 @@ export function Navbar({ version }) {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden text-[#7d7d9e] hover:text-[#e2e2f5] hover:bg-[#101020]"
+            className="md:hidden"
             onClick={() => setOpen((o) => !o)}
             aria-label="Toggle menu"
           >
@@ -95,16 +96,16 @@ export function Navbar({ version }) {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.18, ease: "easeOut" }}
-            className="overflow-hidden border-t border-[#181830] md:hidden"
+            className="overflow-hidden border-t border-border md:hidden"
           >
-            <div className="flex flex-col gap-1 px-5 py-3 bg-[#06060c]">
+            <div className="flex flex-col gap-1 bg-background px-5 py-3">
               {LINKS.map((l) =>
                 l.external ? (
                   <Link
                     key={l.href}
                     to={l.href}
                     onClick={() => setOpen(false)}
-                    className="rounded-md px-3 py-2 text-sm text-[#7d7d9e] transition-colors hover:bg-[#101020] hover:text-[#e2e2f5] cursor-pointer"
+                    className="rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground cursor-pointer"
                   >
                     {l.label}
                   </Link>
@@ -113,13 +114,13 @@ export function Navbar({ version }) {
                     key={l.href}
                     href={l.href}
                     onClick={() => setOpen(false)}
-                    className="rounded-md px-3 py-2 text-sm text-[#7d7d9e] transition-colors hover:bg-[#101020] hover:text-[#e2e2f5] cursor-pointer"
+                    className="rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground cursor-pointer"
                   >
                     {l.label}
                   </a>
                 )
               )}
-              <Button asChild size="sm" className="mt-1 border-0 bg-gradient-to-r from-[#00f0ff] to-[#ff2a9d] text-[#06060c]">
+              <Button asChild size="sm" className="mt-1">
                 <a href="#download" onClick={() => setOpen(false)}>
                   <IconDownload className="size-4" stroke={1.75} />
                   Download
