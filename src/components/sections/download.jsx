@@ -1,8 +1,10 @@
-import { useRef } from "react";
+// File: src/components/sections/download.jsx
+import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion } from "motion/react";
+import { useForm, ValidationError } from "@formspree/react";
 import {
   IconDownload,
   IconBrandGithub,
@@ -15,6 +17,15 @@ import {
 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { WindowsLogo } from "@/components/icons/windows-logo";
 import { AppleLogo } from "@/components/icons/apple-logo";
 import { LinuxLogo } from "@/components/icons/linux-logo";
@@ -75,6 +86,7 @@ export function Download({ release }) {
   const cardsRef = useRef([]);
   const metaRef = useRef(null);
   const featuresRef = useRef(null);
+  const [notifyPlatform, setNotifyPlatform] = useState(null);
 
   useGSAP(() => {
     gsap.fromTo(
@@ -202,6 +214,7 @@ export function Download({ release }) {
               badgeLabel={p.badgeLabel}
               badgeVariant={p.badgeVariant}
               disabled={loading && !assets[p.id]}
+              onNotify={() => setNotifyPlatform(p)}
               ref={(el) => (cardsRef.current[i] = el)}
             />
           ))}
@@ -270,6 +283,14 @@ export function Download({ release }) {
           </a>
         </div>
       </div>
+
+      <NotifyDialog
+        platform={notifyPlatform}
+        open={Boolean(notifyPlatform)}
+        onOpenChange={(open) => {
+          if (!open) setNotifyPlatform(null);
+        }}
+      />
     </section>
   );
 }
@@ -284,6 +305,7 @@ const PlatformCard = ({
   badgeLabel,
   badgeVariant,
   disabled,
+  onNotify,
 }) => {
   return (
     <div
@@ -339,19 +361,13 @@ const PlatformCard = ({
         <h3 className="mt-6 text-xl font-semibold text-foreground">{name}</h3>
         <p className="mt-1.5 text-sm text-muted-foreground">{meta}</p>
 
-        <Badge
-          variant={badgeVariant}
-          className="mt-4"
-        >
+        <Badge variant={badgeVariant} className="mt-4">
           {!comingSoon && (
             <span
-              className="mr-1 inline-block size-1.5 rounded-full"
-              style={{ background: "#22c55e" }}
+              className="mr-1 inline-block size-1.5 rounded-full bg-success"
             />
           )}
-          {comingSoon && (
-            <IconBell className="size-3" stroke={1.75} />
-          )}
+          {comingSoon && <IconBell className="size-3" stroke={1.75} />}
           {badgeLabel}
         </Badge>
 
@@ -361,6 +377,7 @@ const PlatformCard = ({
             size="lg"
             className="mt-6 w-full"
             disabled={disabled}
+            onClick={onNotify}
           >
             <IconBell className="size-4" stroke={1.75} />
             Notify me
@@ -393,3 +410,90 @@ const PlatformCard = ({
     </div>
   );
 };
+
+function NotifyDialog({ platform, open, onOpenChange }) {
+  const formId = import.meta.env.VITE_FORMSPREE_FORM_ID;
+  const [state, handleSubmit] = useForm(formId || null);
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent>
+        <DialogHeader>
+          <div className="mb-1 grid size-10 place-items-center rounded-full bg-primary/10 text-primary">
+            <IconBell className="size-5" stroke={1.75} />
+          </div>
+          <DialogTitle>Get notified for {platform?.name || "this build"}</DialogTitle>
+          <DialogDescription>
+            Leave your email and we'll send the download link when the{" "}
+            {platform?.name || "next"} build is ready.
+          </DialogDescription>
+        </DialogHeader>
+
+        {state.succeeded ? (
+          <div className="flex flex-col items-center gap-3 py-4">
+            <div className="grid size-12 place-items-center rounded-full bg-success/10 text-success">
+              <IconBell className="size-6" stroke={1.75} />
+            </div>
+            <p className="text-center text-sm text-foreground">
+              You're on the list! We'll email you when it's ready.
+            </p>
+            <DialogClose asChild>
+              <Button variant="outline" className="mt-2">
+                Close
+              </Button>
+            </DialogClose>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <label className="flex flex-col gap-2 text-sm font-medium text-foreground">
+              Email address
+              <input
+                type="email"
+                name="email"
+                placeholder="you@example.com"
+                autoComplete="email"
+                required
+                className="h-11 rounded-xl border border-input bg-background px-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary focus:ring-3 focus:ring-primary/15"
+                autoFocus
+              />
+              <ValidationError
+                field="email"
+                errors={state.errors}
+                className="text-xs text-error"
+              />
+            </label>
+
+            <input
+              type="hidden"
+              name="platform"
+              value={platform?.name || "Unknown"}
+            />
+            <input
+              type="hidden"
+              name="source"
+              value="Prompt Nest download section"
+            />
+
+            <div className="rounded-xl bg-muted/50 px-3 py-2 text-xs text-muted-foreground">
+              Platform:{" "}
+              <span className="font-semibold text-foreground">
+                {platform?.name || "Coming soon"}
+              </span>
+            </div>
+
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button type="button" variant="outline">
+                  Cancel
+                </Button>
+              </DialogClose>
+              <Button type="submit" disabled={state.submitting}>
+                {state.submitting ? "Joining..." : "Notify me"}
+              </Button>
+            </DialogFooter>
+          </form>
+        )}
+      </DialogContent>
+    </Dialog>
+  );
+}

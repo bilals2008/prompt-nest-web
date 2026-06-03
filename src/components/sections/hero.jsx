@@ -196,9 +196,9 @@ export function Hero({ version: _version }) {
             />
             <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-2xl">
               <div className="flex items-center gap-1.5 border-b border-border bg-muted/40 px-4 py-2.5">
-                <span className="size-2.5 rounded-full bg-[#ff5f57]" />
-                <span className="size-2.5 rounded-full bg-[#febc2e]" />
-                <span className="size-2.5 rounded-full bg-[#28c840]" />
+                <span className="size-2.5 rounded-full bg-macos-red" />
+                <span className="size-2.5 rounded-full bg-macos-yellow" />
+                <span className="size-2.5 rounded-full bg-macos-green" />
                 <div className="ml-4 flex-1 text-center text-[11px] font-medium text-muted-foreground">
                   Prompt Nest
                 </div>

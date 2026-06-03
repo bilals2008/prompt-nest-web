@@ -1,5 +1,4 @@
-/* File: src/index.css */
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600..900;1,600..900&family=Sora:wght@300..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300..800&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -30,8 +29,15 @@
   --color-backdrop: var(--backdrop);
   --color-surface: var(--surface);
   --color-surface-foreground: var(--surface-foreground);
-  --font-sans: "Sora", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-display: "Playfair Display", Georgia, serif;
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-warning: var(--warning);
+  --color-success: var(--success);
+  --color-error: var(--error);
+  --color-macos-red: var(--macos-red);
+  --color-macos-yellow: var(--macos-yellow);
+  --color-macos-green: var(--macos-green);
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
 }
 
@@ -60,6 +66,11 @@
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: #ffffff;
   --warning: #eab308;
+  --success: #22c55e;
+  --error: #ef4444;
+  --macos-red: #ff5f57;
+  --macos-yellow: #febc2e;
+  --macos-green: #28c840;
 }
 
 [data-theme="dark"] {
@@ -86,6 +97,11 @@
   --destructive: oklch(0.704 0.191 22.216);
   --destructive-foreground: #ffffff;
   --warning: #eab308;
+  --success: #22c55e;
+  --error: #ef4444;
+  --macos-red: #ff5f57;
+  --macos-yellow: #febc2e;
+  --macos-green: #28c840;
 }
 
 @layer base {
@@ -99,8 +115,8 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: "Sora", system-ui, -apple-system, "Segoe UI", sans-serif;
-    font-feature-settings: "ss01";
+    font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-feature-settings: "cv11", "ss01";
   }
 }
 
