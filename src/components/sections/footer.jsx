@@ -5,6 +5,7 @@ export function Footer() {
     <footer className="border-t border-border bg-background">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-5 py-8 sm:flex-row">
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <img src="/logo.png" alt="Prompt Nest" className="size-5 rounded object-cover" />
           <span>Built by</span>
           <a
             href="https://github.com/bilals2008"

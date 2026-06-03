@@ -36,24 +36,7 @@ export function Navbar({ version }) {
           className="flex items-center gap-2 cursor-pointer"
           aria-label="Prompt Nest home"
         >
-          <span className="grid size-7 place-items-center rounded-lg bg-primary text-primary-foreground">
-            <svg
-              viewBox="0 0 32 32"
-              className="size-4"
-              fill="none"
-              aria-hidden="true"
-            >
-              <path
-                d="M9 11.5C9 10.6716 9.67157 10 10.5 10H21.5C22.3284 10 23 10.6716 23 11.5V13.5C23 14.3284 22.3284 15 21.5 15H10.5C9.67157 15 9 14.3284 9 13.5V11.5Z"
-                fill="currentColor"
-              />
-              <path
-                d="M9 18.5C9 17.6716 9.67157 17 10.5 17H17.5C18.3284 17 19 17.6716 19 18.5V20.5C19 21.3284 18.3284 22 17.5 22H10.5C9.67157 22 9 21.3284 9 20.5V18.5Z"
-                fill="currentColor"
-                fillOpacity="0.65"
-              />
-            </svg>
-          </span>
+          <img src="/logo.png" alt="Prompt Nest" className="size-7 rounded-lg object-cover" />
           <span className="text-sm font-medium tracking-tight">
             Prompt Nest
           </span>
