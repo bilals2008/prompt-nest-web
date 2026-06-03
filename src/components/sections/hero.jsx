@@ -29,6 +29,18 @@ export function Hero({ version }) {
         aria-hidden="true"
         className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[700px] w-[900px] -translate-x-1/2 bg-hero-glow opacity-40"
       />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-40 -left-40 -z-10 h-[500px] w-[500px] animate-blob rounded-full bg-primary/20 blur-[100px]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-40 -right-40 -z-10 h-[500px] w-[500px] animate-blob-reverse rounded-full bg-purple-500/20 blur-[100px]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-1/3 right-1/4 -z-10 h-[300px] w-[300px] animate-blob-slow rounded-full bg-cyan-500/15 blur-[80px]"
+      />
       <div className="mx-auto max-w-6xl px-5 pt-20 pb-16 sm:pt-28 sm:pb-24">
         <div className="flex flex-col items-center text-center">
           <motion.div
