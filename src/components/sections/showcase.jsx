@@ -1,8 +1,7 @@
-import { useRef } from "react";
+import { forwardRef, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { motion } from "motion/react";
 import { IconArrowsMove, IconSparkles, IconRefresh } from "@tabler/icons-react";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -38,11 +37,6 @@ const ITEMS = [
   },
 ];
 
-const containerVariants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.12 } },
-};
-
 export function Showcase() {
   const sectionRef = useRef(null);
   const itemsRef = useRef([]);
@@ -51,73 +45,56 @@ export function Showcase() {
   useGSAP(() => {
     gsap.fromTo(
       headingRef.current,
-      { opacity: 0, y: 20 },
+      { opacity: 0, y: 24 },
       {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: headingRef.current,
-          start: "top 85%",
-          toggleActions: "play none none reverse",
-        },
+        opacity: 1, y: 0, duration: 0.6, ease: "power2.out",
+        scrollTrigger: { trigger: headingRef.current, start: "top 85%", toggleActions: "play none none reverse" },
       }
     );
 
     itemsRef.current.forEach((item, i) => {
       if (!item) return;
+
+      const content = item.querySelector("[data-content]");
+      const visual = item.querySelector("[data-visual]");
+      const number = item.querySelector("[data-number]");
+      const bullets = item.querySelectorAll("[data-bullet]");
       const img = item.querySelector("[data-parallax-img]");
+
       if (img) {
-        gsap.fromTo(
-          img,
-          { y: 30, scale: 1.05 },
-          {
-            y: -30,
-            scale: 1,
-            ease: "none",
-            scrollTrigger: {
-              trigger: item,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 2,
-            },
-          }
-        );
+        gsap.fromTo(img, { y: 40, scale: 1.08 }, {
+          y: -40, scale: 1, ease: "none",
+          scrollTrigger: { trigger: item, start: "top bottom", end: "bottom top", scrub: 2 },
+        });
       }
 
-      gsap.fromTo(
-        item.querySelector("[data-content]"),
-        { opacity: 0, x: i % 2 === 0 ? -30 : 30 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 0.7,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: item,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-          },
-        }
-      );
+      if (content) {
+        gsap.fromTo(content, { opacity: 0, x: i % 2 === 0 ? -40 : 40, y: 20 }, {
+          opacity: 1, x: 0, y: 0, duration: 0.7, ease: "power3.out",
+          scrollTrigger: { trigger: item, start: "top 80%", toggleActions: "play none none reverse" },
+        });
+      }
 
-      gsap.fromTo(
-        item.querySelector("[data-visual]"),
-        { opacity: 0, y: 40, scale: 0.95 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.8,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: item,
-            start: "top 75%",
-            toggleActions: "play none none reverse",
-          },
-        }
-      );
+      if (visual) {
+        gsap.fromTo(visual, { opacity: 0, y: 50, scale: 0.92 }, {
+          opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "power3.out",
+          scrollTrigger: { trigger: item, start: "top 75%", toggleActions: "play none none reverse" },
+        });
+      }
+
+      if (number) {
+        gsap.fromTo(number, { scale: 0, opacity: 0 }, {
+          scale: 1, opacity: 1, duration: 0.5, ease: "back.out(2)",
+          scrollTrigger: { trigger: item, start: "top 82%", toggleActions: "play none none reverse" },
+        });
+      }
+
+      bullets.forEach((b, bi) => {
+        gsap.fromTo(b, { opacity: 0, x: -15 }, {
+          opacity: 1, x: 0, duration: 0.4, delay: bi * 0.1, ease: "power2.out",
+          scrollTrigger: { trigger: item, start: "top 75%", toggleActions: "play none none reverse" },
+        });
+      });
     });
   }, { scope: sectionRef });
 
@@ -125,79 +102,101 @@ export function Showcase() {
     <section
       id="showcase"
       ref={sectionRef}
-      className="border-b border-border bg-background"
+      className="relative overflow-hidden border-b border-border bg-background"
     >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-grid-pattern opacity-[0.02]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[600px] w-[800px] -translate-x-1/2 bg-hero-glow opacity-20"
+      />
       <div className="mx-auto max-w-6xl px-5 py-20 sm:py-28">
         <div ref={headingRef} className="mx-auto max-w-2xl text-center">
-          <p className="text-xs font-medium uppercase tracking-wider text-primary">
-            Walkthrough
-          </p>
-          <h2 className="mt-3 text-balance text-3xl font-medium tracking-tight sm:text-4xl">
+          <p className="text-xs font-medium uppercase tracking-wider text-primary">Walkthrough</p>
+          <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
             A closer look at the details.
           </h2>
           <p className="mt-4 text-pretty text-base text-muted-foreground">
-            Every screen, every shortcut — designed to disappear once you start
-            using it.
+            Every screen, every shortcut — designed to disappear once you start using it.
           </p>
         </div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-80px" }}
-          className="mt-20 flex flex-col gap-24 sm:gap-32"
-        >
+        <div className="relative mt-20 flex flex-col gap-28 sm:gap-36">
           {ITEMS.map((item, i) => (
             <ShowcaseBlock
               key={item.title}
               item={item}
+              index={i + 1}
               ref={(el) => (itemsRef.current[i] = el)}
-              index={i}
             />
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
 }
 
-const ShowcaseBlock = ({ item, index: _index }) => {
+const ShowcaseBlock = forwardRef(({ item, index }, blockRef) => {
   const { reverse, icon: Icon, eyebrow, title, body, bullets, image, imageAlt } = item;
+  const visualRef = useRef(null);
+
+  useGSAP(() => {
+    const el = visualRef.current;
+    if (!el) return;
+
+    el.addEventListener("mousemove", (e) => {
+      const rect = el.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      gsap.to(el.querySelector("[data-mockup]"), {
+        rotateX: -y * 3,
+        rotateY: x * 3,
+        duration: 0.8, ease: "power2.out", overwrite: "auto",
+      });
+      gsap.to(el.querySelector("[data-glow]"), {
+        x: x * 10, y: y * 10, duration: 1, ease: "power2.out", overwrite: "auto",
+      });
+    });
+
+    el.addEventListener("mouseleave", () => {
+      gsap.to(el.querySelector("[data-mockup]"), { rotateX: 0, rotateY: 0, duration: 1, ease: "power2.out" });
+      gsap.to(el.querySelector("[data-glow]"), { x: 0, y: 0, duration: 1.2, ease: "power2.out" });
+    });
+  }, { scope: visualRef });
 
   return (
     <div
-      className={`grid items-center gap-10 lg:gap-16 ${
+      ref={blockRef}
+      className={`relative grid items-center gap-10 lg:gap-16 ${
         reverse ? "lg:grid-flow-col-dense" : ""
       } lg:grid-cols-2`}
     >
       <div data-content className={reverse ? "lg:col-start-2" : ""}>
-        <div className="grid size-10 place-items-center rounded-xl border border-border bg-card text-foreground">
-          <Icon className="size-5" stroke={1.75} />
+        <div className="flex items-center gap-4">
+          <span
+            data-number
+            className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary/10 font-mono text-sm font-bold text-primary"
+          >
+            {String(index).padStart(2, "0")}
+          </span>
+          <div className="grid size-10 place-items-center rounded-xl border border-border bg-card text-foreground">
+            <Icon className="size-5" stroke={1.75} />
+          </div>
         </div>
-        <p className="mt-5 text-xs font-medium uppercase tracking-wider text-primary">
-          {eyebrow}
-        </p>
-        <h3 className="mt-2 text-balance text-2xl font-medium tracking-tight sm:text-3xl">
-          {title}
-        </h3>
-        <p className="mt-4 text-pretty text-base text-muted-foreground">
-          {body}
-        </p>
-        <ul className="mt-6 space-y-2">
+        <p className="mt-6 text-xs font-semibold uppercase tracking-widest text-primary">{eyebrow}</p>
+        <h3 className="mt-2 text-balance text-2xl font-semibold tracking-tight sm:text-3xl">{title}</h3>
+        <p className="mt-4 text-pretty text-base leading-relaxed text-muted-foreground">{body}</p>
+        <ul className="mt-6 space-y-2.5">
           {bullets.map((b) => (
             <li
               key={b}
-              className="flex items-center gap-2.5 text-sm text-foreground"
+              data-bullet
+              className="flex items-center gap-3 text-sm text-foreground"
             >
-              <span className="grid size-4 shrink-0 place-items-center rounded-full bg-primary/10 text-primary">
-                <svg
-                  viewBox="0 0 12 12"
-                  className="size-2.5"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
+              <span className="grid size-5 shrink-0 place-items-center rounded-full border border-primary/30 bg-primary/5 text-primary">
+                <svg viewBox="0 0 12 12" className="size-2.5" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M2.5 6.5L5 9L9.5 3.5" strokeLinecap="round" />
                 </svg>
               </span>
@@ -207,27 +206,43 @@ const ShowcaseBlock = ({ item, index: _index }) => {
         </ul>
       </div>
 
-      <div data-visual className={reverse ? "lg:col-start-1 lg:row-start-1" : ""}>
-        <div className="overflow-hidden rounded-2xl border border-border bg-card">
-          <div className="flex items-center gap-1.5 border-b border-border bg-surface px-4 py-2.5">
-            <span className="size-2.5 rounded-full bg-muted-foreground/30" />
-            <span className="size-2.5 rounded-full bg-muted-foreground/30" />
-            <span className="size-2.5 rounded-full bg-muted-foreground/30" />
-            <div className="ml-3 flex-1 text-center text-[11px] font-medium text-muted-foreground">
-              Prompt Nest
+      <div
+        ref={visualRef}
+        data-visual
+        className={`group ${reverse ? "lg:col-start-1 lg:row-start-1" : ""}`}
+        style={{ perspective: "1000px" }}
+      >
+        <div className="relative" data-mockup style={{ transformStyle: "preserve-3d" }}>
+          <div
+            data-glow
+            aria-hidden="true"
+            className="pointer-events-none absolute -inset-4 -z-10 rounded-3xl bg-primary/5 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
+          />
+          <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-xl transition-shadow duration-500 group-hover:shadow-[0_0_40px_var(--color-primary)/0.1]">
+            <div className="flex items-center gap-1.5 border-b border-border bg-muted/40 px-4 py-2.5">
+              <span className="size-2.5 rounded-full bg-destructive/70" />
+              <span className="size-2.5 rounded-full bg-warning/70" />
+              <span className="size-2.5 rounded-full bg-primary/70" />
+              <div className="ml-3 flex-1 text-center text-[11px] font-medium text-muted-foreground">
+                Prompt Nest
+              </div>
+            </div>
+            <div className="overflow-hidden">
+              <img
+                data-parallax-img
+                src={image}
+                alt={imageAlt}
+                loading="lazy"
+                className="block w-full will-change-transform"
+              />
             </div>
           </div>
-          <div className="overflow-hidden">
-            <img
-              data-parallax-img
-              src={image}
-              alt={imageAlt}
-              loading="lazy"
-              className="block w-full will-change-transform"
-            />
-          </div>
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -bottom-6 left-[10%] right-[10%] -z-10 h-8 rounded-[50%] bg-black/20 blur-xl transition-all duration-500 group-hover:scale-110 group-hover:opacity-80"
+          />
         </div>
       </div>
     </div>
   );
-};
+});

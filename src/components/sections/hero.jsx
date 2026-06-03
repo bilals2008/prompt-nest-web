@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -21,137 +21,11 @@ const fadeUp = {
   }),
 };
 
-function DotGrid({ sectionRef }) {
-  const canvasRef = useRef(null);
-  const mouseRef = useRef({ x: 0.5, y: 0.5 });
-  const dotsRef = useRef([]);
-  const rafRef = useRef(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    function draw() {
-      if (!canvas) return;
-      const ctx = canvas.getContext("2d");
-      const w = canvas.width;
-      const h = canvas.height;
-      const mx = mouseRef.current.x;
-      const my = mouseRef.current.y;
-
-      ctx.clearRect(0, 0, w, h);
-
-      const radius = 1.2;
-      const influence = 80;
-
-      dotsRef.current.forEach((dot) => {
-        const dx = (dot.x - mx * w) * 0.03;
-        const dy = (dot.y - my * h) * 0.03;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        const strength = Math.max(0, 1 - dist / influence);
-        const ox = dx * strength;
-        const oy = dy * strength;
-
-        ctx.beginPath();
-        ctx.arc(dot.x + ox, dot.y + oy, radius + strength * 0.8, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(226, 226, 245, ${0.08 + strength * 0.12})`;
-        ctx.fill();
-      });
-
-      rafRef.current = requestAnimationFrame(draw);
-    }
-
-    const resize = () => {
-      const dpr = window.devicePixelRatio || 1;
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
-      const ctx = canvas.getContext("2d");
-      ctx.scale(dpr, dpr);
-      canvas.style.width = `${rect.width}px`;
-      canvas.style.height = `${rect.height}px`;
-
-      const spacing = 40;
-      dotsRef.current = [];
-      for (let x = spacing; x < rect.width; x += spacing) {
-        for (let y = spacing; y < rect.height; y += spacing) {
-          dotsRef.current.push({ x, y });
-        }
-      }
-    };
-
-    resize();
-    window.addEventListener("resize", resize);
-
-    const onMove = (e) => {
-      const rect = canvas.getBoundingClientRect();
-      mouseRef.current = {
-        x: (e.clientX - rect.left) / rect.width,
-        y: (e.clientY - rect.top) / rect.height,
-      };
-    };
-
-    const onLeave = () => {
-      mouseRef.current = { x: 0.5, y: 0.5 };
-    };
-
-    const section = sectionRef.current;
-    if (section) {
-      section.addEventListener("mousemove", onMove);
-      section.addEventListener("mouseleave", onLeave);
-    }
-
-    draw();
-
-    return () => {
-      window.removeEventListener("resize", resize);
-      if (section) {
-        section.removeEventListener("mousemove", onMove);
-        section.removeEventListener("mouseleave", onLeave);
-      }
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, [sectionRef]);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      aria-hidden="true"
-      className="pointer-events-none absolute inset-0 -z-10"
-    />
-  );
-}
-
 export function Hero({ version: _version }) {
   const sectionRef = useRef(null);
   const previewRef = useRef(null);
 
   useGSAP(() => {
-    if (previewRef.current) {
-      gsap.fromTo(
-        previewRef.current,
-        { y: 30 },
-        {
-          y: -30,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top top",
-            end: "bottom top",
-            scrub: 2,
-          },
-        }
-      );
-
-      gsap.to(previewRef.current, {
-        opacity: 0.3,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "bottom bottom",
-          end: "bottom top",
-          scrub: 1.5,
-        },
-      });
-    }
   }, { scope: sectionRef });
 
   return (
@@ -162,9 +36,12 @@ export function Hero({ version: _version }) {
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,var(--color-backdrop)_0%,transparent_70%)] opacity-40"
+        className="pointer-events-none absolute inset-0 -z-10 bg-grid-pattern opacity-[0.04]"
       />
-      <DotGrid sectionRef={sectionRef} />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[700px] w-[900px] -translate-x-1/2 bg-hero-glow opacity-40"
+      />
       <div className="mx-auto max-w-6xl px-5 pt-20 pb-16 sm:pt-28 sm:pb-24">
         <div className="flex flex-col items-center text-center">
           <motion.div
