@@ -1,6 +1,9 @@
+import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 import { IconHistory, IconListCheck, IconStar, IconArrowLeft } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
+import { Navbar } from "@/components/sections/navbar";
+import { ScrollToHash } from "@/components/scroll-to-hash";
 import changelogData from "@/data/changelog.json";
 
 const fadeUp = {
@@ -29,6 +32,8 @@ function VersionBadge({ type }) {
 export function ChangelogPage() {
   return (
     <div className="min-h-screen bg-background">
+      <Navbar />
+      <ScrollToHash />
       <div className="mx-auto max-w-4xl px-5 pt-20 pb-24 sm:pt-28 sm:pb-32">
         <motion.div
           initial="hidden"
@@ -37,10 +42,10 @@ export function ChangelogPage() {
           custom={0}
         >
           <Button asChild variant="ghost" size="sm" className="mb-6">
-            <a href="/">
+            <Link to="/">
               <IconArrowLeft className="size-4" stroke={1.75} />
               Back to home
-            </a>
+            </Link>
           </Button>
         </motion.div>
 

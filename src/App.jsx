@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ScrollToHash } from "@/components/scroll-to-hash";
 import { useLatestRelease } from "@/hooks/use-latest-release";
 import { Navbar } from "@/components/sections/navbar";
 import { Hero } from "@/components/sections/hero";
@@ -14,6 +15,7 @@ function HomePage() {
 
   return (
     <ThemeProvider>
+      <ScrollToHash />
       <div className="min-h-screen bg-background text-foreground">
         <Navbar version={release.version} />
         <main>

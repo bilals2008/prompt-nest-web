@@ -35,8 +35,8 @@ export function Navbar({ version }) {
       }`}
     >
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
-        <a
-          href="/"
+        <Link
+          to="/"
           className="flex items-center gap-2.5 cursor-pointer group"
           aria-label="Prompt Nest home"
         >
@@ -53,7 +53,7 @@ export function Navbar({ version }) {
               </span>
             )}
           </div>
-        </a>
+        </Link>
 
         <div className="hidden items-center gap-1 md:flex">
           {LINKS.map((l) =>
@@ -66,23 +66,23 @@ export function Navbar({ version }) {
                 {l.label}
               </Link>
             ) : (
-              <a
+              <Link
                 key={l.href}
-                href={isHome ? l.href : `/${l.href}`}
+                to={isHome ? l.href : `/${l.href}`}
                 className="relative rounded-md px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground cursor-pointer"
               >
                 {l.label}
-              </a>
+              </Link>
             )
           )}
         </div>
 
         <div className="flex items-center gap-3">
           <Button asChild size="sm" className="hidden sm:inline-flex">
-            <a href={isHome ? "#download" : "/#download"}>
+            <Link to={isHome ? "#download" : "/#download"}>
               <IconDownload className="size-4" stroke={1.75} />
               Download
-            </a>
+            </Link>
           </Button>
           <Button
             variant="ghost"
@@ -117,21 +117,21 @@ export function Navbar({ version }) {
                     {l.label}
                   </Link>
                 ) : (
-                  <a
+                  <Link
                     key={l.href}
-                    href={isHome ? l.href : `/${l.href}`}
+                    to={isHome ? l.href : `/${l.href}`}
                     onClick={() => setOpen(false)}
                     className="rounded-md px-3 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground cursor-pointer"
                   >
                     {l.label}
-                  </a>
+                  </Link>
                 )
               )}
               <Button asChild size="sm" className="mt-2">
-                <a href={isHome ? "#download" : "/#download"} onClick={() => setOpen(false)}>
+                <Link to={isHome ? "#download" : "/#download"} onClick={() => setOpen(false)}>
                   <IconDownload className="size-4" stroke={1.75} />
                   Download
-                </a>
+                </Link>
               </Button>
             </div>
           </motion.div>

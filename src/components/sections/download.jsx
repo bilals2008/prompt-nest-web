@@ -3,6 +3,7 @@ import {
   IconDownload,
   IconBrandGithub,
   IconExternalLink,
+  IconClock,
 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { WindowsLogo } from "@/components/icons/windows-logo";
@@ -19,9 +20,9 @@ function formatDate(iso) {
 }
 
 const PLATFORMS = [
-  { id: "windows", name: "Windows", meta: "Windows 10+ · 64-bit", icon: WindowsLogo },
-  { id: "mac", name: "macOS", meta: "macOS 11+ · Universal", icon: AppleLogo },
-  { id: "linux", name: "Linux", meta: "All major distros", icon: LinuxLogo },
+  { id: "windows", name: "Windows", meta: "Windows 10+ · 64-bit", icon: WindowsLogo, comingSoon: false },
+  { id: "mac", name: "macOS", meta: "macOS 11+ · Universal", icon: AppleLogo, comingSoon: true },
+  { id: "linux", name: "Linux", meta: "All major distros", icon: LinuxLogo, comingSoon: true },
 ];
 
 export function Download({ release }) {
@@ -57,13 +58,14 @@ export function Download({ release }) {
         <div className="mt-12 grid gap-5 sm:grid-cols-3">
           {PLATFORMS.map((p) => (
             <PlatformCard
-              key={p.id}
-              name={p.name}
-              meta={p.meta}
-              Icon={p.icon}
-              asset={assets[p.id]}
-              disabled={loading && !assets[p.id]}
-            />
+                  key={p.id}
+                  name={p.name}
+                  meta={p.meta}
+                  Icon={p.icon}
+                  asset={assets[p.id]}
+                  comingSoon={p.comingSoon}
+                  disabled={loading && !assets[p.id]}
+                />
           ))}
         </div>
 
@@ -104,7 +106,7 @@ export function Download({ release }) {
   );
 }
 
-function PlatformCard({ name, meta, Icon, asset, disabled }) {
+function PlatformCard({ name, meta, Icon, asset, comingSoon, disabled }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
@@ -119,15 +121,19 @@ function PlatformCard({ name, meta, Icon, asset, disabled }) {
           </div>
           <h3 className="mt-5 text-lg font-semibold text-foreground">{name}</h3>
           <p className="mt-1 text-sm text-muted-foreground">{meta}</p>
-          <Button
-            asChild
-            size="lg"
-            className="mt-6 w-full"
-            disabled={disabled}
-          >
-            <a href={asset || "#"} aria-disabled={!asset}>
-              <IconDownload className="size-4" stroke={1.75} />
-              {asset ? `Download for ${name}` : "Not available yet"}
+            <Button
+                asChild
+                size="lg"
+                className="mt-6 w-full"
+                disabled={disabled || comingSoon}
+              >
+                <a href={asset || "#"} aria-disabled={!asset || comingSoon}>
+              {comingSoon ? (
+                <IconClock className="size-4" stroke={1.75} />
+              ) : (
+                <IconDownload className="size-4" stroke={1.75} />
+              )}
+              {comingSoon ? "Coming soon" : asset ? `Download for ${name}` : "Not available yet"}
             </a>
           </Button>
         </div>
