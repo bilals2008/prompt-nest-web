@@ -123,7 +123,7 @@ export function Showcase() {
             <IconLayoutSidebar className="size-3" stroke={1.75} />
             Walkthrough
           </Badge>
-          <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+          <h2 className="mt-3 text-balance text-3xl font-serif italic tracking-tight sm:text-4xl">
             A closer look at the details.
           </h2>
           <p className="mt-4 text-pretty text-base text-muted-foreground">

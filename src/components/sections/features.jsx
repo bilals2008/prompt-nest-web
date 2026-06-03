@@ -129,7 +129,7 @@ export function Features() {
             <IconFolder className="size-3" stroke={1.75} />
             Features
           </Badge>
-          <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
+          <h2 className="text-3xl font-serif italic tracking-tight sm:text-4xl lg:text-5xl">
             Everything you need, nothing you don&apos;t.
           </h2>
           <p className="mx-auto mt-4 max-w-3xl text-base text-muted-foreground sm:mt-5 sm:text-lg">

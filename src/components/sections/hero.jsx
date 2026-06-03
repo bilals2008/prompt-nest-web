@@ -103,7 +103,7 @@ export function Hero({ version: _version }) {
             animate="show"
             variants={fadeUp}
             custom={1}
-            className="mt-7 max-w-5xl text-balance font-[var(--font-display)] text-5xl font-bold italic tracking-normal text-foreground sm:text-6xl md:text-7xl lg:text-8xl"
+            className="mt-7 max-w-5xl text-balance font-serif text-5xl font-bold italic tracking-normal text-foreground sm:text-6xl md:text-7xl lg:text-8xl"
           >
             Your prompt library,
             <br className="hidden sm:block" />

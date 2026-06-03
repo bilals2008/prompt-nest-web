@@ -194,7 +194,7 @@ export function Download({ release }) {
             <IconDownload className="size-3" stroke={1.75} />
             Download
           </Badge>
-          <h2 className="text-balance text-3xl font-medium tracking-tight text-foreground sm:text-4xl">
+          <h2 className="text-balance text-3xl font-serif italic tracking-tight text-foreground sm:text-4xl">
             Get Prompt Nest on your machine.
           </h2>
           <p className="mt-4 text-pretty text-base text-muted-foreground">
