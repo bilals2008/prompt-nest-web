@@ -1,8 +1,16 @@
 import { useEffect, useState } from "react";
 import { IconArrowUp, IconBrandGithub } from "@tabler/icons-react";
+import { useTheme } from "@/components/theme-provider";
+import { THEMES } from "@/data/themes";
+import SOCIALS from "@/data/socials.json";
+
+const SOCIAL_ORDER = ["github", "x", "linkedin", "youtube", "discord"];
 
 export function Footer() {
   const [showTop, setShowTop] = useState(false);
+  const { themeId } = useTheme();
+  const currentTheme = THEMES.find((t) => t.id === themeId);
+  const isDark = currentTheme?.group === "dark";
 
   useEffect(() => {
     const onScroll = () => {
@@ -21,7 +29,7 @@ export function Footer() {
   return (
     <>
       <footer className="border-t border-border bg-background">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-5 py-8 sm:flex-row">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-5 py-8 sm:flex-row">
           <div className="flex flex-wrap items-center justify-center gap-2 text-sm text-muted-foreground sm:justify-start">
             <img
               src="/logo.avif"
@@ -37,6 +45,28 @@ export function Footer() {
             >
               Muhammad Bilal Hassan
             </a>
+          </div>
+
+          <div className="flex items-center gap-3">
+            {SOCIAL_ORDER.map((key) => {
+              const s = SOCIALS[key];
+              return (
+                <a
+                  key={key}
+                  href={s.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={s.label}
+                  className="flex size-9 items-center justify-center rounded-lg transition-colors hover:bg-accent"
+                >
+                  <img
+                    src={isDark ? s.icon.dark : s.icon.light}
+                    alt={s.label}
+                    className="size-5"
+                  />
+                </a>
+              );
+            })}
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground">

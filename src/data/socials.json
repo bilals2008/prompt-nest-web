@@ -1,0 +1,42 @@
+{
+  "github": {
+    "href": "https://github.com/bilals2008",
+    "icon": {
+      "dark": "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/github/dark.svg",
+      "light": "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/github/light.svg"
+    },
+    "label": "GitHub"
+  },
+  "x": {
+    "href": "https://x.com/MBilal7555",
+    "icon": {
+      "dark": "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/x-formerly-twitter/dark.svg",
+      "light": "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/x-formerly-twitter/light.svg"
+    },
+    "label": "X"
+  },
+  "linkedin": {
+    "href": "https://www.linkedin.com/in/muhammad-bilal-hassan-327209414",
+    "icon": {
+      "dark": "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/linkedin/default.svg",
+      "light": "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/linkedin/default.svg"
+    },
+    "label": "LinkedIn"
+  },
+  "youtube": {
+    "href": "https://youtube.com/@BilalHassan-75",
+    "icon": {
+      "dark": "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/youtube/default.svg",
+      "light": "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/youtube/default.svg"
+    },
+    "label": "YouTube"
+  },
+  "discord": {
+    "href": "https://discord.gg/bilaldevelpor_00328",
+    "icon": {
+      "dark": "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/discord/default.svg",
+      "light": "https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/discord/default.svg"
+    },
+    "label": "Discord"
+  }
+}
