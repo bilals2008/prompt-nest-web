@@ -1,25 +1,19 @@
-# 🪹 Prompt Nest
+# 🪹 Prompt Nest — Website
 
-A calm, native desktop app to organize, search, and reuse your AI prompts. Built with Electron, React, and Tailwind CSS.
+Marketing website for **Prompt Nest** — a calm, native desktop app to organize, search, and reuse your AI prompts.
 
-## ✨ Features
-
-- **Workspaces & Folders** — Nest folders, drag-and-drop reordering, unlimited workspaces
-- **Instant Search** — Full-text search across titles, bodies, and tags with live filtering
-- **Keyboard-First** — Every action has a shortcut via command palette
-- **15+ Themes** — Hand-tuned dark, light, and vibrant themes
-- **Local-First** — SQLite database, no accounts, no cloud, no telemetry
-- **Native & Fast** — Electron-based with tiny footprint and instant launch
-- **Auto-Updates** — Differential downloads with zero surprise restarts
+Built with React 19, Vite 8, and Tailwind CSS v4. Deployed on [Netlify](https://promptnest-web.netlify.app).
 
 ## 🛠 Tech Stack
 
 - [React](https://react.dev/) — UI framework
 - [Vite](https://vite.dev/) — Build tool
 - [Tailwind CSS](https://tailwindcss.com/) — Styling
-- [Electron](https://www.electronjs.org/) — Desktop runtime
 - [GSAP](https://greensock.com/gsap/) — Animations
 - [Motion](https://motion.dev/) — Declarative animations
+- [Radix UI](https://www.radix-ui.com/) — Accessible primitives
+- [Tabler Icons](https://tabler.io/icons) — Icons
+- [Formspree](https://formspree.io/) — Form handling
 
 ## 🚀 Getting Started
 
