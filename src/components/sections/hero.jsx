@@ -1,16 +1,17 @@
+// File: src/components/sections/hero.jsx
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
 import { motion } from "motion/react";
 import {
   IconDownload,
   IconArrowRight,
 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { WindowsLogo } from "@/components/icons/windows-logo";
 import { AppleLogo } from "@/components/icons/apple-logo";
 import { LinuxLogo } from "@/components/icons/linux-logo";
+import heroScreenshot from "@/assets/hero-screenshot.avif";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -23,34 +24,6 @@ const fadeUp = {
 
 export function Hero({ version: _version }) {
   const sectionRef = useRef(null);
-  const previewRef = useRef(null);
-
-  useGSAP(() => {
-    const el = previewRef.current;
-    if (!el) return;
-
-    el.addEventListener("mousemove", (e) => {
-      const rect = el.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      gsap.to(el, {
-        rotateY: x * 4,
-        rotateX: -y * 4,
-        duration: 0.8,
-        ease: "power2.out",
-        overwrite: "auto",
-      });
-    });
-
-    el.addEventListener("mouseleave", () => {
-      gsap.to(el, {
-        rotateY: 0,
-        rotateX: 0,
-        duration: 1,
-        ease: "power2.out",
-      });
-    });
-  }, { scope: sectionRef });
 
   return (
     <section
@@ -75,7 +48,7 @@ export function Hero({ version: _version }) {
         className="pointer-events-none absolute right-1/4 top-40 -z-10 h-[250px] w-[250px] rounded-full bg-primary/5 blur-[80px]"
       />
 
-      <div className="mx-auto max-w-6xl px-4 pt-16 pb-12 sm:px-5 sm:pt-20 sm:pb-16 lg:pt-24 lg:pb-20">
+      <div className="mx-auto max-w-6xl px-4 pt-16 pb-10 sm:px-5 sm:pt-20 sm:pb-14 lg:pt-24 lg:pb-16">
         <div className="flex flex-col items-center text-center">
           <motion.div
             initial="hidden"
@@ -174,45 +147,54 @@ export function Hero({ version: _version }) {
         </div>
 
         <motion.div
-          ref={previewRef}
           initial={{ opacity: 0, y: 34 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.35 }}
-          className="mx-auto mt-12 max-w-5xl sm:mt-14"
-          style={{ perspective: "1200px", transformStyle: "preserve-3d" }}
+          className="mx-auto mt-10 max-w-6xl sm:mt-12 lg:max-w-7xl"
         >
-          <div className="relative">
-            <div
+          <div className="relative flex items-center justify-center">
+            <motion.div
               aria-hidden="true"
-              className="absolute -inset-4 -z-10 rounded-3xl bg-primary/5 opacity-50 blur-2xl"
+              className="pointer-events-none absolute -bottom-8 left-[5%] right-[5%] -z-10 h-16 rounded-[50%] bg-primary/20 blur-3xl"
+              animate={{
+                scaleX: [1, 0.88, 1],
+                scaleY: [1, 0.75, 1],
+                opacity: [0.35, 0.15, 0.35],
+                y: [0, 6, 0],
+              }}
+              transition={{ duration: 4, ease: "easeInOut", repeat: Infinity }}
             />
+
             <div
               aria-hidden="true"
-              className="absolute -inset-px -z-10 rounded-2xl"
+              className="absolute -inset-px -z-10"
               style={{
                 background:
-                  "linear-gradient(135deg, rgba(99,102,241,0.15), transparent 40%, transparent 60%, rgba(99,102,241,0.1))",
+                  "linear-gradient(135deg, rgba(99,102,241,0.12), transparent 40%, transparent 60%, rgba(99,102,241,0.08))",
               }}
             />
-            <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-2xl">
-              <div className="flex items-center gap-1.5 border-b border-border bg-muted/40 px-4 py-2.5">
-                <span className="size-2.5 rounded-full bg-macos-red" />
-                <span className="size-2.5 rounded-full bg-macos-yellow" />
-                <span className="size-2.5 rounded-full bg-macos-green" />
-                <div className="ml-4 flex-1 text-center text-[11px] font-medium text-muted-foreground">
-                  Prompt Nest
-                </div>
-              </div>
-              <div className="group/img relative flex aspect-video items-center justify-center overflow-hidden bg-muted/20">
-                <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover/img:opacity-100" />
-                <div className="absolute inset-0 z-10 -translate-x-full bg-gradient-to-r from-transparent via-white/[0.04] to-transparent transition-transform duration-700 group-hover/img:translate-x-full" />
+
+            <motion.div
+              className="w-full overflow-hidden rounded-md border border-border bg-card cursor-pointer"
+              style={{
+                boxShadow:
+                  "0 25px 50px -12px rgba(0,0,0,0.4), 0 0 0 1px rgba(99,102,241,0.1)",
+              }}
+              whileHover={{ scale: 1.02 }}
+              initial={{ opacity: 0.5 }}
+              animate={{ opacity: 0.5 }}
+              whileInView={{ opacity: 0.5 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <AspectRatio ratio={16 / 10}>
                 <img
-                  src="https://placehold.co/1200x675/12121a/7d7d9e?text=App+Screenshot"
+                  src={heroScreenshot}
                   alt="Prompt Nest app preview"
-                  className="block size-full object-cover transition-transform duration-700 ease-out group-hover/img:scale-105"
+                  className="h-full w-full object-cover object-top"
                 />
-              </div>
-            </div>
+              </AspectRatio>
+            </motion.div>
+
             <div
               aria-hidden="true"
               className="pointer-events-none absolute -bottom-4 left-[15%] right-[15%] -z-10 h-10 rounded-[50%] bg-primary/10 blur-xl"
