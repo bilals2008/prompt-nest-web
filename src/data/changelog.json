@@ -1,6 +1,54 @@
 {
   "releases": [
     {
+      "version": "0.3.1",
+      "date": "June 04, 2026",
+      "type": "stable",
+      "changes": [
+        "Minor improvements and bug fixes"
+      ]
+    },
+    {
+      "version": "0.3.0",
+      "date": "June 04, 2026",
+      "type": "stable",
+      "changes": [
+        "Splash screen with loading animation on app startup",
+        "First-run setup wizard (theme, text size, default view)",
+        "Welcome modal for new users",
+        "Warning modal for Danger Zone (Erase All Data)"
+      ]
+    },
+    {
+      "version": "0.2.1",
+      "date": "June 04, 2026",
+      "type": "stable",
+      "changes": [
+        "Removed Electron and React badges from Settings",
+        "Added Desktop App badge",
+        "Added social links in Settings footer",
+        "Added Changelog link in Settings > Resources",
+        "Default theme changed to Cyberpunk"
+      ]
+    },
+    {
+      "version": "0.2.0",
+      "date": "June 04, 2026",
+      "type": "stable",
+      "changes": [
+        "Spotlight search (Ctrl+K) for quick access",
+        "Cyberpunk and Sage theme variants",
+        "Expanded color theme options",
+        "Read theme for distraction-free reading",
+        "CSV export/import with selective export",
+        "Confirm before delete setting now works across app",
+        "Backend support for prompt committing",
+        "Improved layout and spacing in export/import page",
+        "Fixed shell args escaping on Windows",
+        "Fixed Windows compatibility in release script"
+      ]
+    },
+    {
       "version": "0.1.0",
       "date": "May 31, 2026",
       "type": "stable",
