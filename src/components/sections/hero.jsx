@@ -175,22 +175,19 @@ export function Hero({ version: _version }) {
             />
 
             <motion.div
-              className="w-full overflow-hidden rounded-md border border-border bg-card cursor-pointer"
+              className="w-full overflow-hidden rounded-xl border border-white/10 bg-[#0a0a0f] cursor-pointer"
               style={{
                 boxShadow:
-                  "0 25px 50px -12px rgba(0,0,0,0.4), 0 0 0 1px rgba(99,102,241,0.1)",
+                  "0 25px 50px -12px rgba(0,0,0,0.5), 0 0 80px rgba(99,102,241,0.08)",
               }}
-              whileHover={{ scale: 1.02 }}
-              initial={{ opacity: 0.5 }}
-              animate={{ opacity: 0.5 }}
-              whileInView={{ opacity: 0.5 }}
+              whileHover={{ scale: 1.01, y: -4 }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             >
               <AspectRatio ratio={16 / 10}>
                 <img
                   src={heroScreenshot}
                   alt="Prompt Nest app preview"
-                  className="h-full w-full object-cover object-top"
+                  className="h-full w-full object-cover object-top opacity-50"
                 />
               </AspectRatio>
             </motion.div>

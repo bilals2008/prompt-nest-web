@@ -14,7 +14,6 @@ import { Button } from "@/components/ui/button";
 
 const LINKS = [
   { label: "Features", href: "#features" },
-  { label: "Showcase", href: "#showcase" },
   { label: "Themes", href: "#themes" },
 ];
 
